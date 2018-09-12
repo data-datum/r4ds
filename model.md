@@ -1,0 +1,58 @@
+
+# (PART) Model {-}
+
+# Introducción {#model-intro}
+
+Ahora que estás equipado con herramientas de programación poderosas, finalmente podemos regresar a modelar.  Utilizarás tus nuevas herramientas de domador de datos y de programación para ajustar muchos modelos y entender como funcionan.  El foco de este libro es la exploración, no la confirmación o la inferencia formal.  Pero aprenderás un par de herramientas básicas que te ayudarán a entender la variación en tus modelos.
+
+<img src="diagrams/data-science-model.png" width="75%" style="display: block; margin: auto;" />
+
+El objetivo de un modelo es proveer un resumen simple y de baja dimensionalidad sobre un conjunto de datos.  Idealmente, el modelo capturará "señales" verdaderas (por ejemplo patrones generados por el fenómeno de interés) e ignorará el "ruido" (es decir, variaciones aleatorias que no nos interesan).  Sólo vamos a cubrir modelos "predictivos", los cuales, como su nombre sugiere, generan predicciones. Hay otro tipo de modelo que no vamos a discutir: los modelos de "descubrimiento de datos".  Estos modelos no hacen predicciones, si no que ayudan a descubrir relaciones interesantes entre tus datos. (Estos dos tipos de modelos suelen ser llamados supervisados y no supervisados, pero no creo que esa terminología sea particularmente esclarecedora.)
+Este libro no te dará un entendimiento profundo de la teoría matemática que subyace a los modelos.  Sin embargo, construirá tu intuición sobre cómo funcionan los modelos estadísticos y te proporcionará una familia de herramientas útiles que te permitirán utilizar modelos para comprender mejor tus datos:
+
+* En [conceptos básicos], aprenderás cómo los modelos funcionan mecánicamente, 
+  centrándonos en la importante familia de modelos lineales. Aprenderás herramientas 
+  generales para obtener información sobre lo que un modelo predictivo te dice sobre 
+  tus datos, centrándonos en conjuntos de datos simples simulados.
+
+* En [construcción de modelos], aprenderás cómo usar modelos para extraer patrones 
+  conocidos en datos reales. Una vez que reconozcas un patrón importante, 
+  es útil hacerlo explícito en un modelo, porque entonces podrás ver más fácilmente 
+  aquellas señales sutiles que quedan en tus datos.
+
+* En [muchos modelos], aprenderás cómo usar muchos modelos simples para ayudar
+  a comprender conjuntos de datos complejos. Esta es una técnica poderosa, pero para acceder
+  necesitarás combinar herramientas de modelado y de programación.
+
+Deliberadamente dejamos fuera del capítulo las explicaciones de herramientas para evaluar cuantitativamente los modelos porque dicha evaluación precisa requiere conocer un par de grandes ideas que simplemente no tenemos espacio para cubrir aquí. Por ahora, dependerás de la evaluación cualitativa y de tu escepticismo natural. En [Aprender más sobre los modelos], te indicaremos otros recursos donde podrás seguir aprendiendo.
+
+## Generación de hipótesis vs. confirmación de hipótesis
+
+En este libro vamos a usar los modelos como una herramienta para la exploración, completando la tríada de las herramientas para EDA que se introdujeron en la Parte 1. Los modelos no se suelen enseñar de esta manera, pero como verás, son herramientas importantes para la exploración. Tradicionalmente, el enfoque del modelado está en la inferencia, es decir, para confirmar que una hipótesis es verdadera; hacerlo correctamente no es complicado, pero si difícil. Hay un par de ideas que debes comprender para poder hacer la inferencia correctamente:
+
+1. Cada observación puede ser utilizada para exploración o para confirmación,
+   pero no para ambas.   
+
+2. Puedes usar una observación tantas veces como quieras para la exploración,
+   pero solo una vez para confirmación. En el instante que usaste una
+   observación dos veces, pasaste de confirmar a explorar.
+       
+Esto es necesario porque, para confirmar una hipótesis, debes usar datos independientes de los datos utilizados para generarla. De lo contrario, serás demasiado optimista. No hay absolutamente nada de malo en la exploración, pero nunca debes vender un análisis exploratorio como análisis confirmatorio porque es fundamentalmente erróneo.
+
+If you are serious about doing an confirmatory analysis, one approach is to split your data into three pieces before you begin the analysis:
+Si realmente quieres realizar un análisis confirmatorio, un enfoque es dividir los datos en tres partes antes de comenzar el análisis:
+
+1.  El 60% de los datos van a un conjunto de __entrenamiento__ (del inglés, _training_) o exploración. Puedes
+    hacer lo que quieras con estos datos, desde visualizarlo a ajustar toneladas
+    de modelos.
+      
+2.  20% va a un conjunto de __consulta__ (del inglés, _query_). Se puede usar esta información para comparar modelos
+    o hacer visualizaciones a mano, pero no está permitido usarlo como parte de
+    un proceso automatizado.  
+
+3.	El otro 20% se reserva para un conjunto de __validación__ (del inglés, _test_). Sólo se pueden usar estos
+    datos UNA VEZ, para probar tu modelo final.
+         
+Esta partición de los datos, te permite explorar con los datos de entrenamiento, generando ocasionalmente hipótesis candidatas que se verifican con el conjunto de consultas. Cuando estés seguro de tener el modelo correcto, se verifica una vez con los datos del conjunto de validación.
+
+(Se debe tener en cuenta que, incluso cuando realice modelado confirmatorio, se necesita hacer EDA. Si no se realiza ninguna EDA, los problemas de calidad que tengan los datos quedarán ocultos).

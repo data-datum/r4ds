@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>R para Ciencia de Datos</title>
+  <meta name="description" content="Este texto te enseñará cómo hacer ciencia de datos con R: aprenderás a importar datos, llevarlos a la estructura más conveniente, transformarlos, visualizarlos y modelarlos. Con él podrás poner en pŕactica las habilidades necesarias para hacer ciencia de datos. Tal como los químicos aprenden a limpiar tubos de ensayo y ordenar un laboratorio, aprenderás a limpiar datos y crear gráficos— junto a muchas otras habilidades que permiten que la ciencia de datos tenga lugar. En este libro encontrarás las mejores prácticas para desarrollar dichas tareas usando R. También aprenderás a usar la gramática de gráficos, programación letrada e investigación reproducible para ahorrar tiempo. Además, aprenderás a manejar recursos cognitivos para facilitar el hacer descubrimientos al momento de manipular, visualizar y explorar datos.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="R para Ciencia de Datos" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://es.r4ds.hadley.nz/" />
+  <meta property="og:image" content="http://es.r4ds.hadley.nz/cover.png" />
+  <meta property="og:description" content="Este texto te enseñará cómo hacer ciencia de datos con R: aprenderás a importar datos, llevarlos a la estructura más conveniente, transformarlos, visualizarlos y modelarlos. Con él podrás poner en pŕactica las habilidades necesarias para hacer ciencia de datos. Tal como los químicos aprenden a limpiar tubos de ensayo y ordenar un laboratorio, aprenderás a limpiar datos y crear gráficos— junto a muchas otras habilidades que permiten que la ciencia de datos tenga lugar. En este libro encontrarás las mejores prácticas para desarrollar dichas tareas usando R. También aprenderás a usar la gramática de gráficos, programación letrada e investigación reproducible para ahorrar tiempo. Además, aprenderás a manejar recursos cognitivos para facilitar el hacer descubrimientos al momento de manipular, visualizar y explorar datos." />
+  <meta name="github-repo" content="cienciadedatos/r4ds" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="R para Ciencia de Datos" />
+  
+  <meta name="twitter:description" content="Este texto te enseñará cómo hacer ciencia de datos con R: aprenderás a importar datos, llevarlos a la estructura más conveniente, transformarlos, visualizarlos y modelarlos. Con él podrás poner en pŕactica las habilidades necesarias para hacer ciencia de datos. Tal como los químicos aprenden a limpiar tubos de ensayo y ordenar un laboratorio, aprenderás a limpiar datos y crear gráficos— junto a muchas otras habilidades que permiten que la ciencia de datos tenga lugar. En este libro encontrarás las mejores prácticas para desarrollar dichas tareas usando R. También aprenderás a usar la gramática de gráficos, programación letrada e investigación reproducible para ahorrar tiempo. Además, aprenderás a manejar recursos cognitivos para facilitar el hacer descubrimientos al momento de manipular, visualizar y explorar datos." />
+  <meta name="twitter:image" content="http://es.r4ds.hadley.nz/cover.png" />
+
+<meta name="author" content="Garrett Grolemund">
+<meta name="author" content="Hadley Wickham">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="model-building.html">
+<link rel="next" href="r-markdown.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.2/leaflet.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="r4ds.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">R for Data Science</a></strong></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Bienvenida</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#sobre-la-traduccion"><i class="fa fa-check"></i><b>0.1</b> Sobre la traducción</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#sobre-la-version-original-en-ingles"><i class="fa fa-check"></i><b>0.2</b> Sobre la versión original en inglés</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#what-you-will-learn"><i class="fa fa-check"></i><b>1.1</b> What you will learn</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#how-this-book-is-organised"><i class="fa fa-check"></i><b>1.2</b> How this book is organised</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#what-you-wont-learn"><i class="fa fa-check"></i><b>1.3</b> What you won’t learn</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#big-data"><i class="fa fa-check"></i><b>1.3.1</b> Big data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#python-julia-and-friends"><i class="fa fa-check"></i><b>1.3.2</b> Python, Julia, and friends</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction.html"><a href="introduction.html#non-rectangular-data"><i class="fa fa-check"></i><b>1.3.3</b> Non-rectangular data</a></li>
+<li class="chapter" data-level="1.3.4" data-path="introduction.html"><a href="introduction.html#hypothesis-confirmation"><i class="fa fa-check"></i><b>1.3.4</b> Hypothesis confirmation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#prerequisites"><i class="fa fa-check"></i><b>1.4</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#r"><i class="fa fa-check"></i><b>1.4.1</b> R</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduction.html"><a href="introduction.html#rstudio"><i class="fa fa-check"></i><b>1.4.2</b> RStudio</a></li>
+<li class="chapter" data-level="1.4.3" data-path="introduction.html"><a href="introduction.html#the-tidyverse"><i class="fa fa-check"></i><b>1.4.3</b> The tidyverse</a></li>
+<li class="chapter" data-level="1.4.4" data-path="introduction.html"><a href="introduction.html#other-packages"><i class="fa fa-check"></i><b>1.4.4</b> Other packages</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#running-r-code"><i class="fa fa-check"></i><b>1.5</b> Running R code</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#getting-help-and-learning-more"><i class="fa fa-check"></i><b>1.6</b> Getting help and learning more</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#acknowledgements"><i class="fa fa-check"></i><b>1.7</b> Acknowledgements</a></li>
+<li class="chapter" data-level="1.8" data-path="introduction.html"><a href="introduction.html#colophon"><i class="fa fa-check"></i><b>1.8</b> Colophon</a></li>
+</ul></li>
+<li class="part"><span><b>I Explora</b></span></li>
+<li class="chapter" data-level="2" data-path="explora-introduccion.html"><a href="explora-introduccion.html"><i class="fa fa-check"></i><b>2</b> Introducción</a></li>
+<li class="chapter" data-level="3" data-path="data-visualisation.html"><a href="data-visualisation.html"><i class="fa fa-check"></i><b>3</b> Data visualisation</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-visualisation.html"><a href="data-visualisation.html#introduction-1"><i class="fa fa-check"></i><b>3.1</b> Introduction</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="data-visualisation.html"><a href="data-visualisation.html#prerequisites-1"><i class="fa fa-check"></i><b>3.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data-visualisation.html"><a href="data-visualisation.html#first-steps"><i class="fa fa-check"></i><b>3.2</b> First steps</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="data-visualisation.html"><a href="data-visualisation.html#the-mpg-data-frame"><i class="fa fa-check"></i><b>3.2.1</b> The <code>mpg</code> data frame</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-visualisation.html"><a href="data-visualisation.html#creating-a-ggplot"><i class="fa fa-check"></i><b>3.2.2</b> Creating a ggplot</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-visualisation.html"><a href="data-visualisation.html#a-graphing-template"><i class="fa fa-check"></i><b>3.2.3</b> A graphing template</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-visualisation.html"><a href="data-visualisation.html#exercises"><i class="fa fa-check"></i><b>3.2.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data-visualisation.html"><a href="data-visualisation.html#aesthetic-mappings"><i class="fa fa-check"></i><b>3.3</b> Aesthetic mappings</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="data-visualisation.html"><a href="data-visualisation.html#exercises-1"><i class="fa fa-check"></i><b>3.3.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="data-visualisation.html"><a href="data-visualisation.html#common-problems"><i class="fa fa-check"></i><b>3.4</b> Common problems</a></li>
+<li class="chapter" data-level="3.5" data-path="data-visualisation.html"><a href="data-visualisation.html#facets"><i class="fa fa-check"></i><b>3.5</b> Facets</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="data-visualisation.html"><a href="data-visualisation.html#exercises-2"><i class="fa fa-check"></i><b>3.5.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="data-visualisation.html"><a href="data-visualisation.html#geometric-objects"><i class="fa fa-check"></i><b>3.6</b> Geometric objects</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="data-visualisation.html"><a href="data-visualisation.html#exercises-3"><i class="fa fa-check"></i><b>3.6.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="data-visualisation.html"><a href="data-visualisation.html#statistical-transformations"><i class="fa fa-check"></i><b>3.7</b> Statistical transformations</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="data-visualisation.html"><a href="data-visualisation.html#exercises-4"><i class="fa fa-check"></i><b>3.7.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="data-visualisation.html"><a href="data-visualisation.html#position-adjustments"><i class="fa fa-check"></i><b>3.8</b> Position adjustments</a><ul>
+<li class="chapter" data-level="3.8.1" data-path="data-visualisation.html"><a href="data-visualisation.html#exercises-5"><i class="fa fa-check"></i><b>3.8.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="data-visualisation.html"><a href="data-visualisation.html#coordinate-systems"><i class="fa fa-check"></i><b>3.9</b> Coordinate systems</a><ul>
+<li class="chapter" data-level="3.9.1" data-path="data-visualisation.html"><a href="data-visualisation.html#exercises-6"><i class="fa fa-check"></i><b>3.9.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="data-visualisation.html"><a href="data-visualisation.html#the-layered-grammar-of-graphics"><i class="fa fa-check"></i><b>3.10</b> The layered grammar of graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="workflow-basics.html"><a href="workflow-basics.html"><i class="fa fa-check"></i><b>4</b> Workflow: basics</a><ul>
+<li class="chapter" data-level="4.1" data-path="workflow-basics.html"><a href="workflow-basics.html#coding-basics"><i class="fa fa-check"></i><b>4.1</b> Coding basics</a></li>
+<li class="chapter" data-level="4.2" data-path="workflow-basics.html"><a href="workflow-basics.html#whats-in-a-name"><i class="fa fa-check"></i><b>4.2</b> What’s in a name?</a></li>
+<li class="chapter" data-level="4.3" data-path="workflow-basics.html"><a href="workflow-basics.html#calling-functions"><i class="fa fa-check"></i><b>4.3</b> Calling functions</a></li>
+<li class="chapter" data-level="4.4" data-path="workflow-basics.html"><a href="workflow-basics.html#practice"><i class="fa fa-check"></i><b>4.4</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="transform.html"><a href="transform.html"><i class="fa fa-check"></i><b>5</b> Data transformation</a><ul>
+<li class="chapter" data-level="5.1" data-path="transform.html"><a href="transform.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="transform.html"><a href="transform.html#prerequisites-2"><i class="fa fa-check"></i><b>5.1.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="5.1.2" data-path="transform.html"><a href="transform.html#nycflights13"><i class="fa fa-check"></i><b>5.1.2</b> nycflights13</a></li>
+<li class="chapter" data-level="5.1.3" data-path="transform.html"><a href="transform.html#dplyr-basics"><i class="fa fa-check"></i><b>5.1.3</b> dplyr basics</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="transform.html"><a href="transform.html#filter-rows-with-filter"><i class="fa fa-check"></i><b>5.2</b> Filter rows with <code>filter()</code></a><ul>
+<li class="chapter" data-level="5.2.1" data-path="transform.html"><a href="transform.html#comparisons"><i class="fa fa-check"></i><b>5.2.1</b> Comparisons</a></li>
+<li class="chapter" data-level="5.2.2" data-path="transform.html"><a href="transform.html#logical-operators"><i class="fa fa-check"></i><b>5.2.2</b> Logical operators</a></li>
+<li class="chapter" data-level="5.2.3" data-path="transform.html"><a href="transform.html#missing-values"><i class="fa fa-check"></i><b>5.2.3</b> Missing values</a></li>
+<li class="chapter" data-level="5.2.4" data-path="transform.html"><a href="transform.html#exercises-7"><i class="fa fa-check"></i><b>5.2.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="transform.html"><a href="transform.html#arrange-rows-with-arrange"><i class="fa fa-check"></i><b>5.3</b> Arrange rows with <code>arrange()</code></a><ul>
+<li class="chapter" data-level="5.3.1" data-path="transform.html"><a href="transform.html#exercises-8"><i class="fa fa-check"></i><b>5.3.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="transform.html"><a href="transform.html#select"><i class="fa fa-check"></i><b>5.4</b> Select columns with <code>select()</code></a><ul>
+<li class="chapter" data-level="5.4.1" data-path="transform.html"><a href="transform.html#exercises-9"><i class="fa fa-check"></i><b>5.4.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="transform.html"><a href="transform.html#add-new-variables-with-mutate"><i class="fa fa-check"></i><b>5.5</b> Add new variables with <code>mutate()</code></a><ul>
+<li class="chapter" data-level="5.5.1" data-path="transform.html"><a href="transform.html#mutate-funs"><i class="fa fa-check"></i><b>5.5.1</b> Useful creation functions</a></li>
+<li class="chapter" data-level="5.5.2" data-path="transform.html"><a href="transform.html#exercises-10"><i class="fa fa-check"></i><b>5.5.2</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="transform.html"><a href="transform.html#grouped-summaries-with-summarise"><i class="fa fa-check"></i><b>5.6</b> Grouped summaries with <code>summarise()</code></a><ul>
+<li class="chapter" data-level="5.6.1" data-path="transform.html"><a href="transform.html#combining-multiple-operations-with-the-pipe"><i class="fa fa-check"></i><b>5.6.1</b> Combining multiple operations with the pipe</a></li>
+<li class="chapter" data-level="5.6.2" data-path="transform.html"><a href="transform.html#missing-values-1"><i class="fa fa-check"></i><b>5.6.2</b> Missing values</a></li>
+<li class="chapter" data-level="5.6.3" data-path="transform.html"><a href="transform.html#counts"><i class="fa fa-check"></i><b>5.6.3</b> Counts</a></li>
+<li class="chapter" data-level="5.6.4" data-path="transform.html"><a href="transform.html#summarise-funs"><i class="fa fa-check"></i><b>5.6.4</b> Useful summary functions</a></li>
+<li class="chapter" data-level="5.6.5" data-path="transform.html"><a href="transform.html#grouping-by-multiple-variables"><i class="fa fa-check"></i><b>5.6.5</b> Grouping by multiple variables</a></li>
+<li class="chapter" data-level="5.6.6" data-path="transform.html"><a href="transform.html#ungrouping"><i class="fa fa-check"></i><b>5.6.6</b> Ungrouping</a></li>
+<li class="chapter" data-level="5.6.7" data-path="transform.html"><a href="transform.html#exercises-11"><i class="fa fa-check"></i><b>5.6.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="transform.html"><a href="transform.html#grouped-mutates-and-filters"><i class="fa fa-check"></i><b>5.7</b> Grouped mutates (and filters)</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="transform.html"><a href="transform.html#exercises-12"><i class="fa fa-check"></i><b>5.7.1</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="workflow-scripts.html"><a href="workflow-scripts.html"><i class="fa fa-check"></i><b>6</b> Workflow: scripts</a><ul>
+<li class="chapter" data-level="6.1" data-path="workflow-scripts.html"><a href="workflow-scripts.html#running-code"><i class="fa fa-check"></i><b>6.1</b> Running code</a></li>
+<li class="chapter" data-level="6.2" data-path="workflow-scripts.html"><a href="workflow-scripts.html#rstudio-diagnostics"><i class="fa fa-check"></i><b>6.2</b> RStudio diagnostics</a></li>
+<li class="chapter" data-level="6.3" data-path="workflow-scripts.html"><a href="workflow-scripts.html#practice-1"><i class="fa fa-check"></i><b>6.3</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>7</b> Exploratory Data Analysis</a><ul>
+<li class="chapter" data-level="7.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#introduction-3"><i class="fa fa-check"></i><b>7.1</b> Introduction</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#prerequisites-3"><i class="fa fa-check"></i><b>7.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#questions"><i class="fa fa-check"></i><b>7.2</b> Questions</a></li>
+<li class="chapter" data-level="7.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#variation"><i class="fa fa-check"></i><b>7.3</b> Variation</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#visualising-distributions"><i class="fa fa-check"></i><b>7.3.1</b> Visualising distributions</a></li>
+<li class="chapter" data-level="7.3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#typical-values"><i class="fa fa-check"></i><b>7.3.2</b> Typical values</a></li>
+<li class="chapter" data-level="7.3.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#unusual-values"><i class="fa fa-check"></i><b>7.3.3</b> Unusual values</a></li>
+<li class="chapter" data-level="7.3.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#exercises-13"><i class="fa fa-check"></i><b>7.3.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#missing-values-2"><i class="fa fa-check"></i><b>7.4</b> Missing values</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#exercises-14"><i class="fa fa-check"></i><b>7.4.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#covariation"><i class="fa fa-check"></i><b>7.5</b> Covariation</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#cat-cont"><i class="fa fa-check"></i><b>7.5.1</b> A categorical and continuous variable</a></li>
+<li class="chapter" data-level="7.5.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#two-categorical-variables"><i class="fa fa-check"></i><b>7.5.2</b> Two categorical variables</a></li>
+<li class="chapter" data-level="7.5.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#two-continuous-variables"><i class="fa fa-check"></i><b>7.5.3</b> Two continuous variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#patterns-and-models"><i class="fa fa-check"></i><b>7.6</b> Patterns and models</a></li>
+<li class="chapter" data-level="7.7" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#ggplot2-calls"><i class="fa fa-check"></i><b>7.7</b> ggplot2 calls</a></li>
+<li class="chapter" data-level="7.8" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#learning-more"><i class="fa fa-check"></i><b>7.8</b> Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="workflow-projects.html"><a href="workflow-projects.html"><i class="fa fa-check"></i><b>8</b> Workflow: projects</a><ul>
+<li class="chapter" data-level="8.1" data-path="workflow-projects.html"><a href="workflow-projects.html#what-is-real"><i class="fa fa-check"></i><b>8.1</b> What is real?</a></li>
+<li class="chapter" data-level="8.2" data-path="workflow-projects.html"><a href="workflow-projects.html#where-does-your-analysis-live"><i class="fa fa-check"></i><b>8.2</b> Where does your analysis live?</a></li>
+<li class="chapter" data-level="8.3" data-path="workflow-projects.html"><a href="workflow-projects.html#paths-and-directories"><i class="fa fa-check"></i><b>8.3</b> Paths and directories</a></li>
+<li class="chapter" data-level="8.4" data-path="workflow-projects.html"><a href="workflow-projects.html#rstudio-projects"><i class="fa fa-check"></i><b>8.4</b> RStudio projects</a></li>
+<li class="chapter" data-level="8.5" data-path="workflow-projects.html"><a href="workflow-projects.html#summary"><i class="fa fa-check"></i><b>8.5</b> Summary</a></li>
+</ul></li>
+<li class="part"><span><b>II Wrangle</b></span></li>
+<li class="chapter" data-level="9" data-path="wrangle-intro.html"><a href="wrangle-intro.html"><i class="fa fa-check"></i><b>9</b> Introduction</a></li>
+<li class="chapter" data-level="10" data-path="tibbles.html"><a href="tibbles.html"><i class="fa fa-check"></i><b>10</b> Tibbles</a><ul>
+<li class="chapter" data-level="10.1" data-path="tibbles.html"><a href="tibbles.html#introduction-4"><i class="fa fa-check"></i><b>10.1</b> Introduction</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="tibbles.html"><a href="tibbles.html#prerequisites-4"><i class="fa fa-check"></i><b>10.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="tibbles.html"><a href="tibbles.html#tibbles"><i class="fa fa-check"></i><b>10.2</b> Creating tibbles</a></li>
+<li class="chapter" data-level="10.3" data-path="tibbles.html"><a href="tibbles.html#tibbles-vs.data.frame"><i class="fa fa-check"></i><b>10.3</b> Tibbles vs. data.frame</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="tibbles.html"><a href="tibbles.html#printing"><i class="fa fa-check"></i><b>10.3.1</b> Printing</a></li>
+<li class="chapter" data-level="10.3.2" data-path="tibbles.html"><a href="tibbles.html#subsetting"><i class="fa fa-check"></i><b>10.3.2</b> Subsetting</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="tibbles.html"><a href="tibbles.html#interacting-with-older-code"><i class="fa fa-check"></i><b>10.4</b> Interacting with older code</a></li>
+<li class="chapter" data-level="10.5" data-path="tibbles.html"><a href="tibbles.html#exercises-18"><i class="fa fa-check"></i><b>10.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="data-import.html"><a href="data-import.html"><i class="fa fa-check"></i><b>11</b> Data import</a><ul>
+<li class="chapter" data-level="11.1" data-path="data-import.html"><a href="data-import.html#introduction-5"><i class="fa fa-check"></i><b>11.1</b> Introduction</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="data-import.html"><a href="data-import.html#prerequisites-5"><i class="fa fa-check"></i><b>11.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="data-import.html"><a href="data-import.html#getting-started"><i class="fa fa-check"></i><b>11.2</b> Getting started</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="data-import.html"><a href="data-import.html#compared-to-base-r"><i class="fa fa-check"></i><b>11.2.1</b> Compared to base R</a></li>
+<li class="chapter" data-level="11.2.2" data-path="data-import.html"><a href="data-import.html#exercises-19"><i class="fa fa-check"></i><b>11.2.2</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="data-import.html"><a href="data-import.html#parsing-a-vector"><i class="fa fa-check"></i><b>11.3</b> Parsing a vector</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="data-import.html"><a href="data-import.html#numbers"><i class="fa fa-check"></i><b>11.3.1</b> Numbers</a></li>
+<li class="chapter" data-level="11.3.2" data-path="data-import.html"><a href="data-import.html#readr-strings"><i class="fa fa-check"></i><b>11.3.2</b> Strings</a></li>
+<li class="chapter" data-level="11.3.3" data-path="data-import.html"><a href="data-import.html#readr-factors"><i class="fa fa-check"></i><b>11.3.3</b> Factors</a></li>
+<li class="chapter" data-level="11.3.4" data-path="data-import.html"><a href="data-import.html#readr-datetimes"><i class="fa fa-check"></i><b>11.3.4</b> Dates, date-times, and times</a></li>
+<li class="chapter" data-level="11.3.5" data-path="data-import.html"><a href="data-import.html#exercises-20"><i class="fa fa-check"></i><b>11.3.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="data-import.html"><a href="data-import.html#parsing-a-file"><i class="fa fa-check"></i><b>11.4</b> Parsing a file</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="data-import.html"><a href="data-import.html#strategy"><i class="fa fa-check"></i><b>11.4.1</b> Strategy</a></li>
+<li class="chapter" data-level="11.4.2" data-path="data-import.html"><a href="data-import.html#problems"><i class="fa fa-check"></i><b>11.4.2</b> Problems</a></li>
+<li class="chapter" data-level="11.4.3" data-path="data-import.html"><a href="data-import.html#other-strategies"><i class="fa fa-check"></i><b>11.4.3</b> Other strategies</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="data-import.html"><a href="data-import.html#writing-to-a-file"><i class="fa fa-check"></i><b>11.5</b> Writing to a file</a></li>
+<li class="chapter" data-level="11.6" data-path="data-import.html"><a href="data-import.html#other-types-of-data"><i class="fa fa-check"></i><b>11.6</b> Other types of data</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="datos-ordenados.html"><a href="datos-ordenados.html"><i class="fa fa-check"></i><b>12</b> Datos ordenados</a></li>
+<li class="chapter" data-level="13" data-path="relational-data.html"><a href="relational-data.html"><i class="fa fa-check"></i><b>13</b> Relational data</a><ul>
+<li class="chapter" data-level="13.1" data-path="relational-data.html"><a href="relational-data.html#introduction-6"><i class="fa fa-check"></i><b>13.1</b> Introduction</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="relational-data.html"><a href="relational-data.html#prerequisites-6"><i class="fa fa-check"></i><b>13.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="relational-data.html"><a href="relational-data.html#nycflights13-relational"><i class="fa fa-check"></i><b>13.2</b> nycflights13</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="relational-data.html"><a href="relational-data.html#exercises-21"><i class="fa fa-check"></i><b>13.2.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="relational-data.html"><a href="relational-data.html#keys"><i class="fa fa-check"></i><b>13.3</b> Keys</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="relational-data.html"><a href="relational-data.html#exercises-22"><i class="fa fa-check"></i><b>13.3.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="relational-data.html"><a href="relational-data.html#mutating-joins"><i class="fa fa-check"></i><b>13.4</b> Mutating joins</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="relational-data.html"><a href="relational-data.html#understanding-joins"><i class="fa fa-check"></i><b>13.4.1</b> Understanding joins</a></li>
+<li class="chapter" data-level="13.4.2" data-path="relational-data.html"><a href="relational-data.html#inner-join"><i class="fa fa-check"></i><b>13.4.2</b> Inner join</a></li>
+<li class="chapter" data-level="13.4.3" data-path="relational-data.html"><a href="relational-data.html#outer-join"><i class="fa fa-check"></i><b>13.4.3</b> Outer joins</a></li>
+<li class="chapter" data-level="13.4.4" data-path="relational-data.html"><a href="relational-data.html#join-matches"><i class="fa fa-check"></i><b>13.4.4</b> Duplicate keys</a></li>
+<li class="chapter" data-level="13.4.5" data-path="relational-data.html"><a href="relational-data.html#join-by"><i class="fa fa-check"></i><b>13.4.5</b> Defining the key columns</a></li>
+<li class="chapter" data-level="13.4.6" data-path="relational-data.html"><a href="relational-data.html#exercises-23"><i class="fa fa-check"></i><b>13.4.6</b> Exercises</a></li>
+<li class="chapter" data-level="13.4.7" data-path="relational-data.html"><a href="relational-data.html#other-implementations"><i class="fa fa-check"></i><b>13.4.7</b> Other implementations</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="relational-data.html"><a href="relational-data.html#filtering-joins"><i class="fa fa-check"></i><b>13.5</b> Filtering joins</a><ul>
+<li class="chapter" data-level="13.5.1" data-path="relational-data.html"><a href="relational-data.html#exercises-24"><i class="fa fa-check"></i><b>13.5.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13.6" data-path="relational-data.html"><a href="relational-data.html#join-problems"><i class="fa fa-check"></i><b>13.6</b> Join problems</a></li>
+<li class="chapter" data-level="13.7" data-path="relational-data.html"><a href="relational-data.html#set-operations"><i class="fa fa-check"></i><b>13.7</b> Set operations</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="strings.html"><a href="strings.html"><i class="fa fa-check"></i><b>14</b> Strings</a><ul>
+<li class="chapter" data-level="14.1" data-path="strings.html"><a href="strings.html#introduction-7"><i class="fa fa-check"></i><b>14.1</b> Introduction</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="strings.html"><a href="strings.html#prerequisites-7"><i class="fa fa-check"></i><b>14.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="strings.html"><a href="strings.html#string-basics"><i class="fa fa-check"></i><b>14.2</b> String basics</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="strings.html"><a href="strings.html#string-length"><i class="fa fa-check"></i><b>14.2.1</b> String length</a></li>
+<li class="chapter" data-level="14.2.2" data-path="strings.html"><a href="strings.html#combining-strings"><i class="fa fa-check"></i><b>14.2.2</b> Combining strings</a></li>
+<li class="chapter" data-level="14.2.3" data-path="strings.html"><a href="strings.html#subsetting-strings"><i class="fa fa-check"></i><b>14.2.3</b> Subsetting strings</a></li>
+<li class="chapter" data-level="14.2.4" data-path="strings.html"><a href="strings.html#locales"><i class="fa fa-check"></i><b>14.2.4</b> Locales</a></li>
+<li class="chapter" data-level="14.2.5" data-path="strings.html"><a href="strings.html#exercises-25"><i class="fa fa-check"></i><b>14.2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="strings.html"><a href="strings.html#matching-patterns-with-regular-expressions"><i class="fa fa-check"></i><b>14.3</b> Matching patterns with regular expressions</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="strings.html"><a href="strings.html#basic-matches"><i class="fa fa-check"></i><b>14.3.1</b> Basic matches</a></li>
+<li class="chapter" data-level="14.3.2" data-path="strings.html"><a href="strings.html#anchors"><i class="fa fa-check"></i><b>14.3.2</b> Anchors</a></li>
+<li class="chapter" data-level="14.3.3" data-path="strings.html"><a href="strings.html#character-classes-and-alternatives"><i class="fa fa-check"></i><b>14.3.3</b> Character classes and alternatives</a></li>
+<li class="chapter" data-level="14.3.4" data-path="strings.html"><a href="strings.html#repetition"><i class="fa fa-check"></i><b>14.3.4</b> Repetition</a></li>
+<li class="chapter" data-level="14.3.5" data-path="strings.html"><a href="strings.html#grouping-and-backreferences"><i class="fa fa-check"></i><b>14.3.5</b> Grouping and backreferences</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="strings.html"><a href="strings.html#tools"><i class="fa fa-check"></i><b>14.4</b> Tools</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="strings.html"><a href="strings.html#detect-matches"><i class="fa fa-check"></i><b>14.4.1</b> Detect matches</a></li>
+<li class="chapter" data-level="14.4.2" data-path="strings.html"><a href="strings.html#exercises-31"><i class="fa fa-check"></i><b>14.4.2</b> Exercises</a></li>
+<li class="chapter" data-level="14.4.3" data-path="strings.html"><a href="strings.html#extract-matches"><i class="fa fa-check"></i><b>14.4.3</b> Extract matches</a></li>
+<li class="chapter" data-level="14.4.4" data-path="strings.html"><a href="strings.html#grouped-matches"><i class="fa fa-check"></i><b>14.4.4</b> Grouped matches</a></li>
+<li class="chapter" data-level="14.4.5" data-path="strings.html"><a href="strings.html#replacing-matches"><i class="fa fa-check"></i><b>14.4.5</b> Replacing matches</a></li>
+<li class="chapter" data-level="14.4.6" data-path="strings.html"><a href="strings.html#splitting"><i class="fa fa-check"></i><b>14.4.6</b> Splitting</a></li>
+<li class="chapter" data-level="14.4.7" data-path="strings.html"><a href="strings.html#find-matches"><i class="fa fa-check"></i><b>14.4.7</b> Find matches</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="strings.html"><a href="strings.html#other-types-of-pattern"><i class="fa fa-check"></i><b>14.5</b> Other types of pattern</a><ul>
+<li class="chapter" data-level="14.5.1" data-path="strings.html"><a href="strings.html#exercises-36"><i class="fa fa-check"></i><b>14.5.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14.6" data-path="strings.html"><a href="strings.html#other-uses-of-regular-expressions"><i class="fa fa-check"></i><b>14.6</b> Other uses of regular expressions</a></li>
+<li class="chapter" data-level="14.7" data-path="strings.html"><a href="strings.html#stringi"><i class="fa fa-check"></i><b>14.7</b> stringi</a><ul>
+<li class="chapter" data-level="14.7.1" data-path="strings.html"><a href="strings.html#exercises-37"><i class="fa fa-check"></i><b>14.7.1</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="factores.html"><a href="factores.html"><i class="fa fa-check"></i><b>15</b> Factores</a><ul>
+<li class="chapter" data-level="15.1" data-path="factores.html"><a href="factores.html#introduccion"><i class="fa fa-check"></i><b>15.1</b> Introducción</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="factores.html"><a href="factores.html#requisitos-previos"><i class="fa fa-check"></i><b>15.1.1</b> Requisitos previos</a></li>
+<li class="chapter" data-level="15.1.2" data-path="factores.html"><a href="factores.html#aprendiendo-mas"><i class="fa fa-check"></i><b>15.1.2</b> Aprendiendo más</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="factores.html"><a href="factores.html#creando-factores"><i class="fa fa-check"></i><b>15.2</b> Creando factores</a></li>
+<li class="chapter" data-level="15.3" data-path="factores.html"><a href="factores.html#encuesta-social-general"><i class="fa fa-check"></i><b>15.3</b> Encuesta social general</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="factores.html"><a href="factores.html#ejercicios"><i class="fa fa-check"></i><b>15.3.1</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="factores.html"><a href="factores.html#modificar-el-orden-de-los-factores"><i class="fa fa-check"></i><b>15.4</b> Modificar el orden de los factores</a><ul>
+<li class="chapter" data-level="15.4.1" data-path="factores.html"><a href="factores.html#ejercicios-1"><i class="fa fa-check"></i><b>15.4.1</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="factores.html"><a href="factores.html#modificar-los-niveles-de-los-factores"><i class="fa fa-check"></i><b>15.5</b> Modificar los niveles de los factores</a><ul>
+<li class="chapter" data-level="15.5.1" data-path="factores.html"><a href="factores.html#ejercicios-2"><i class="fa fa-check"></i><b>15.5.1</b> Ejercicios</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html"><i class="fa fa-check"></i><b>16</b> Horas y fechas</a><ul>
+<li class="chapter" data-level="16.1" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#introduccion-1"><i class="fa fa-check"></i><b>16.1</b> Introducción</a><ul>
+<li class="chapter" data-level="16.1.1" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#requisitos-previos-1"><i class="fa fa-check"></i><b>16.1.1</b> Requisitos previos</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#creando-horasfechas"><i class="fa fa-check"></i><b>16.2</b> Creando horas/fechas</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#desde-cadenas-de-caracteres"><i class="fa fa-check"></i><b>16.2.1</b> Desde cadenas de caracteres</a></li>
+<li class="chapter" data-level="16.2.2" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#desde-componentes-individuales"><i class="fa fa-check"></i><b>16.2.2</b> Desde componentes individuales</a></li>
+<li class="chapter" data-level="16.2.3" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#desde-otros-tipos"><i class="fa fa-check"></i><b>16.2.3</b> Desde otros tipos</a></li>
+<li class="chapter" data-level="16.2.4" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#ejercicios-3"><i class="fa fa-check"></i><b>16.2.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#componentes-fecha-hora"><i class="fa fa-check"></i><b>16.3</b> Componentes fecha-hora</a><ul>
+<li class="chapter" data-level="16.3.1" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#obteniendo-los-componentes"><i class="fa fa-check"></i><b>16.3.1</b> Obteniendo los componentes</a></li>
+<li class="chapter" data-level="16.3.2" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#redondeo"><i class="fa fa-check"></i><b>16.3.2</b> Redondeo</a></li>
+<li class="chapter" data-level="16.3.3" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#configurando-componentes"><i class="fa fa-check"></i><b>16.3.3</b> Configurando componentes</a></li>
+<li class="chapter" data-level="16.3.4" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#ejercicios-4"><i class="fa fa-check"></i><b>16.3.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#plazos-de-tiempo"><i class="fa fa-check"></i><b>16.4</b> Plazos de tiempo</a><ul>
+<li class="chapter" data-level="16.4.1" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#duraciones"><i class="fa fa-check"></i><b>16.4.1</b> Duraciones</a></li>
+<li class="chapter" data-level="16.4.2" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#periodos"><i class="fa fa-check"></i><b>16.4.2</b> Períodos</a></li>
+<li class="chapter" data-level="16.4.3" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#intervalos"><i class="fa fa-check"></i><b>16.4.3</b> Intervalos</a></li>
+<li class="chapter" data-level="16.4.4" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#resumen"><i class="fa fa-check"></i><b>16.4.4</b> Resumen</a></li>
+<li class="chapter" data-level="16.4.5" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#ejercicios-5"><i class="fa fa-check"></i><b>16.4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="16.5" data-path="horas-y-fechas.html"><a href="horas-y-fechas.html#husos-horarios"><i class="fa fa-check"></i><b>16.5</b> Husos horarios</a></li>
+</ul></li>
+<li class="part"><span><b>III Program</b></span></li>
+<li class="chapter" data-level="17" data-path="program-intro.html"><a href="program-intro.html"><i class="fa fa-check"></i><b>17</b> Introduction</a><ul>
+<li class="chapter" data-level="17.1" data-path="program-intro.html"><a href="program-intro.html#learning-more-1"><i class="fa fa-check"></i><b>17.1</b> Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="pipes.html"><a href="pipes.html"><i class="fa fa-check"></i><b>18</b> Pipes</a><ul>
+<li class="chapter" data-level="18.1" data-path="pipes.html"><a href="pipes.html#introduction-8"><i class="fa fa-check"></i><b>18.1</b> Introduction</a><ul>
+<li class="chapter" data-level="18.1.1" data-path="pipes.html"><a href="pipes.html#prerequisites-8"><i class="fa fa-check"></i><b>18.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="pipes.html"><a href="pipes.html#piping-alternatives"><i class="fa fa-check"></i><b>18.2</b> Piping alternatives</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="pipes.html"><a href="pipes.html#intermediate-steps"><i class="fa fa-check"></i><b>18.2.1</b> Intermediate steps</a></li>
+<li class="chapter" data-level="18.2.2" data-path="pipes.html"><a href="pipes.html#overwrite-the-original"><i class="fa fa-check"></i><b>18.2.2</b> Overwrite the original</a></li>
+<li class="chapter" data-level="18.2.3" data-path="pipes.html"><a href="pipes.html#function-composition"><i class="fa fa-check"></i><b>18.2.3</b> Function composition</a></li>
+<li class="chapter" data-level="18.2.4" data-path="pipes.html"><a href="pipes.html#use-the-pipe"><i class="fa fa-check"></i><b>18.2.4</b> Use the pipe</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="pipes.html"><a href="pipes.html#when-not-to-use-the-pipe"><i class="fa fa-check"></i><b>18.3</b> When not to use the pipe</a></li>
+<li class="chapter" data-level="18.4" data-path="pipes.html"><a href="pipes.html#other-tools-from-magrittr"><i class="fa fa-check"></i><b>18.4</b> Other tools from magrittr</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>19</b> Functions</a><ul>
+<li class="chapter" data-level="19.1" data-path="functions.html"><a href="functions.html#introduction-9"><i class="fa fa-check"></i><b>19.1</b> Introduction</a><ul>
+<li class="chapter" data-level="19.1.1" data-path="functions.html"><a href="functions.html#prerequisites-9"><i class="fa fa-check"></i><b>19.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="functions.html"><a href="functions.html#when-should-you-write-a-function"><i class="fa fa-check"></i><b>19.2</b> When should you write a function?</a><ul>
+<li class="chapter" data-level="19.2.1" data-path="functions.html"><a href="functions.html#practice-2"><i class="fa fa-check"></i><b>19.2.1</b> Practice</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="functions.html"><a href="functions.html#functions-are-for-humans-and-computers"><i class="fa fa-check"></i><b>19.3</b> Functions are for humans and computers</a><ul>
+<li class="chapter" data-level="19.3.1" data-path="functions.html"><a href="functions.html#exercises-38"><i class="fa fa-check"></i><b>19.3.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="functions.html"><a href="functions.html#conditional-execution"><i class="fa fa-check"></i><b>19.4</b> Conditional execution</a><ul>
+<li class="chapter" data-level="19.4.1" data-path="functions.html"><a href="functions.html#conditions"><i class="fa fa-check"></i><b>19.4.1</b> Conditions</a></li>
+<li class="chapter" data-level="19.4.2" data-path="functions.html"><a href="functions.html#multiple-conditions"><i class="fa fa-check"></i><b>19.4.2</b> Multiple conditions</a></li>
+<li class="chapter" data-level="19.4.3" data-path="functions.html"><a href="functions.html#code-style"><i class="fa fa-check"></i><b>19.4.3</b> Code style</a></li>
+<li class="chapter" data-level="19.4.4" data-path="functions.html"><a href="functions.html#exercises-39"><i class="fa fa-check"></i><b>19.4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="functions.html"><a href="functions.html#function-arguments"><i class="fa fa-check"></i><b>19.5</b> Function arguments</a><ul>
+<li class="chapter" data-level="19.5.1" data-path="functions.html"><a href="functions.html#choosing-names"><i class="fa fa-check"></i><b>19.5.1</b> Choosing names</a></li>
+<li class="chapter" data-level="19.5.2" data-path="functions.html"><a href="functions.html#checking-values"><i class="fa fa-check"></i><b>19.5.2</b> Checking values</a></li>
+<li class="chapter" data-level="19.5.3" data-path="functions.html"><a href="functions.html#dot-dot-dot"><i class="fa fa-check"></i><b>19.5.3</b> Dot-dot-dot (…)</a></li>
+<li class="chapter" data-level="19.5.4" data-path="functions.html"><a href="functions.html#lazy-evaluation"><i class="fa fa-check"></i><b>19.5.4</b> Lazy evaluation</a></li>
+<li class="chapter" data-level="19.5.5" data-path="functions.html"><a href="functions.html#exercises-40"><i class="fa fa-check"></i><b>19.5.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="functions.html"><a href="functions.html#return-values"><i class="fa fa-check"></i><b>19.6</b> Return values</a><ul>
+<li class="chapter" data-level="19.6.1" data-path="functions.html"><a href="functions.html#explicit-return-statements"><i class="fa fa-check"></i><b>19.6.1</b> Explicit return statements</a></li>
+<li class="chapter" data-level="19.6.2" data-path="functions.html"><a href="functions.html#writing-pipeable-functions"><i class="fa fa-check"></i><b>19.6.2</b> Writing pipeable functions</a></li>
+</ul></li>
+<li class="chapter" data-level="19.7" data-path="functions.html"><a href="functions.html#environment"><i class="fa fa-check"></i><b>19.7</b> Environment</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>20</b> Vectors</a><ul>
+<li class="chapter" data-level="20.1" data-path="vectors.html"><a href="vectors.html#introduction-10"><i class="fa fa-check"></i><b>20.1</b> Introduction</a><ul>
+<li class="chapter" data-level="20.1.1" data-path="vectors.html"><a href="vectors.html#prerequisites-10"><i class="fa fa-check"></i><b>20.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="vectors.html"><a href="vectors.html#vector-basics"><i class="fa fa-check"></i><b>20.2</b> Vector basics</a></li>
+<li class="chapter" data-level="20.3" data-path="vectors.html"><a href="vectors.html#important-types-of-atomic-vector"><i class="fa fa-check"></i><b>20.3</b> Important types of atomic vector</a><ul>
+<li class="chapter" data-level="20.3.1" data-path="vectors.html"><a href="vectors.html#logical"><i class="fa fa-check"></i><b>20.3.1</b> Logical</a></li>
+<li class="chapter" data-level="20.3.2" data-path="vectors.html"><a href="vectors.html#numeric"><i class="fa fa-check"></i><b>20.3.2</b> Numeric</a></li>
+<li class="chapter" data-level="20.3.3" data-path="vectors.html"><a href="vectors.html#character"><i class="fa fa-check"></i><b>20.3.3</b> Character</a></li>
+<li class="chapter" data-level="20.3.4" data-path="vectors.html"><a href="vectors.html#missing-values-3"><i class="fa fa-check"></i><b>20.3.4</b> Missing values</a></li>
+<li class="chapter" data-level="20.3.5" data-path="vectors.html"><a href="vectors.html#exercises-41"><i class="fa fa-check"></i><b>20.3.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="vectors.html"><a href="vectors.html#using-atomic-vectors"><i class="fa fa-check"></i><b>20.4</b> Using atomic vectors</a><ul>
+<li class="chapter" data-level="20.4.1" data-path="vectors.html"><a href="vectors.html#coercion"><i class="fa fa-check"></i><b>20.4.1</b> Coercion</a></li>
+<li class="chapter" data-level="20.4.2" data-path="vectors.html"><a href="vectors.html#test-functions"><i class="fa fa-check"></i><b>20.4.2</b> Test functions</a></li>
+<li class="chapter" data-level="20.4.3" data-path="vectors.html"><a href="vectors.html#scalars-and-recycling-rules"><i class="fa fa-check"></i><b>20.4.3</b> Scalars and recycling rules</a></li>
+<li class="chapter" data-level="20.4.4" data-path="vectors.html"><a href="vectors.html#naming-vectors"><i class="fa fa-check"></i><b>20.4.4</b> Naming vectors</a></li>
+<li class="chapter" data-level="20.4.5" data-path="vectors.html"><a href="vectors.html#vector-subsetting"><i class="fa fa-check"></i><b>20.4.5</b> Subsetting</a></li>
+<li class="chapter" data-level="20.4.6" data-path="vectors.html"><a href="vectors.html#exercises-42"><i class="fa fa-check"></i><b>20.4.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20.5" data-path="vectors.html"><a href="vectors.html#lists"><i class="fa fa-check"></i><b>20.5</b> Recursive vectors (lists)</a><ul>
+<li class="chapter" data-level="20.5.1" data-path="vectors.html"><a href="vectors.html#visualising-lists"><i class="fa fa-check"></i><b>20.5.1</b> Visualising lists</a></li>
+<li class="chapter" data-level="20.5.2" data-path="vectors.html"><a href="vectors.html#subsetting-1"><i class="fa fa-check"></i><b>20.5.2</b> Subsetting</a></li>
+<li class="chapter" data-level="20.5.3" data-path="vectors.html"><a href="vectors.html#lists-of-condiments"><i class="fa fa-check"></i><b>20.5.3</b> Lists of condiments</a></li>
+<li class="chapter" data-level="20.5.4" data-path="vectors.html"><a href="vectors.html#exercises-43"><i class="fa fa-check"></i><b>20.5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20.6" data-path="vectors.html"><a href="vectors.html#attributes"><i class="fa fa-check"></i><b>20.6</b> Attributes</a></li>
+<li class="chapter" data-level="20.7" data-path="vectors.html"><a href="vectors.html#augmented-vectors"><i class="fa fa-check"></i><b>20.7</b> Augmented vectors</a><ul>
+<li class="chapter" data-level="20.7.1" data-path="vectors.html"><a href="vectors.html#factors"><i class="fa fa-check"></i><b>20.7.1</b> Factors</a></li>
+<li class="chapter" data-level="20.7.2" data-path="vectors.html"><a href="vectors.html#dates-and-date-times"><i class="fa fa-check"></i><b>20.7.2</b> Dates and date-times</a></li>
+<li class="chapter" data-level="20.7.3" data-path="vectors.html"><a href="vectors.html#tibbles-1"><i class="fa fa-check"></i><b>20.7.3</b> Tibbles</a></li>
+<li class="chapter" data-level="20.7.4" data-path="vectors.html"><a href="vectors.html#exercises-44"><i class="fa fa-check"></i><b>20.7.4</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="iteration.html"><a href="iteration.html"><i class="fa fa-check"></i><b>21</b> Iteration</a><ul>
+<li class="chapter" data-level="21.1" data-path="iteration.html"><a href="iteration.html#introduction-11"><i class="fa fa-check"></i><b>21.1</b> Introduction</a><ul>
+<li class="chapter" data-level="21.1.1" data-path="iteration.html"><a href="iteration.html#prerequisites-11"><i class="fa fa-check"></i><b>21.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="21.2" data-path="iteration.html"><a href="iteration.html#for-loops"><i class="fa fa-check"></i><b>21.2</b> For loops</a><ul>
+<li class="chapter" data-level="21.2.1" data-path="iteration.html"><a href="iteration.html#exercises-45"><i class="fa fa-check"></i><b>21.2.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="iteration.html"><a href="iteration.html#for-loop-variations"><i class="fa fa-check"></i><b>21.3</b> For loop variations</a><ul>
+<li class="chapter" data-level="21.3.1" data-path="iteration.html"><a href="iteration.html#modifying-an-existing-object"><i class="fa fa-check"></i><b>21.3.1</b> Modifying an existing object</a></li>
+<li class="chapter" data-level="21.3.2" data-path="iteration.html"><a href="iteration.html#looping-patterns"><i class="fa fa-check"></i><b>21.3.2</b> Looping patterns</a></li>
+<li class="chapter" data-level="21.3.3" data-path="iteration.html"><a href="iteration.html#unknown-output-length"><i class="fa fa-check"></i><b>21.3.3</b> Unknown output length</a></li>
+<li class="chapter" data-level="21.3.4" data-path="iteration.html"><a href="iteration.html#unknown-sequence-length"><i class="fa fa-check"></i><b>21.3.4</b> Unknown sequence length</a></li>
+<li class="chapter" data-level="21.3.5" data-path="iteration.html"><a href="iteration.html#exercises-46"><i class="fa fa-check"></i><b>21.3.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21.4" data-path="iteration.html"><a href="iteration.html#for-loops-vs.functionals"><i class="fa fa-check"></i><b>21.4</b> For loops vs. functionals</a><ul>
+<li class="chapter" data-level="21.4.1" data-path="iteration.html"><a href="iteration.html#exercises-47"><i class="fa fa-check"></i><b>21.4.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21.5" data-path="iteration.html"><a href="iteration.html#the-map-functions"><i class="fa fa-check"></i><b>21.5</b> The map functions</a><ul>
+<li class="chapter" data-level="21.5.1" data-path="iteration.html"><a href="iteration.html#shortcuts"><i class="fa fa-check"></i><b>21.5.1</b> Shortcuts</a></li>
+<li class="chapter" data-level="21.5.2" data-path="iteration.html"><a href="iteration.html#base-r"><i class="fa fa-check"></i><b>21.5.2</b> Base R</a></li>
+<li class="chapter" data-level="21.5.3" data-path="iteration.html"><a href="iteration.html#exercises-48"><i class="fa fa-check"></i><b>21.5.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21.6" data-path="iteration.html"><a href="iteration.html#dealing-with-failure"><i class="fa fa-check"></i><b>21.6</b> Dealing with failure</a></li>
+<li class="chapter" data-level="21.7" data-path="iteration.html"><a href="iteration.html#mapping-over-multiple-arguments"><i class="fa fa-check"></i><b>21.7</b> Mapping over multiple arguments</a><ul>
+<li class="chapter" data-level="21.7.1" data-path="iteration.html"><a href="iteration.html#invoking-different-functions"><i class="fa fa-check"></i><b>21.7.1</b> Invoking different functions</a></li>
+</ul></li>
+<li class="chapter" data-level="21.8" data-path="iteration.html"><a href="iteration.html#walk"><i class="fa fa-check"></i><b>21.8</b> Walk</a></li>
+<li class="chapter" data-level="21.9" data-path="iteration.html"><a href="iteration.html#other-patterns-of-for-loops"><i class="fa fa-check"></i><b>21.9</b> Other patterns of for loops</a><ul>
+<li class="chapter" data-level="21.9.1" data-path="iteration.html"><a href="iteration.html#predicate-functions"><i class="fa fa-check"></i><b>21.9.1</b> Predicate functions</a></li>
+<li class="chapter" data-level="21.9.2" data-path="iteration.html"><a href="iteration.html#reduce-and-accumulate"><i class="fa fa-check"></i><b>21.9.2</b> Reduce and accumulate</a></li>
+<li class="chapter" data-level="21.9.3" data-path="iteration.html"><a href="iteration.html#exercises-49"><i class="fa fa-check"></i><b>21.9.3</b> Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>IV Model</b></span></li>
+<li class="chapter" data-level="22" data-path="model-intro.html"><a href="model-intro.html"><i class="fa fa-check"></i><b>22</b> Introducción</a><ul>
+<li class="chapter" data-level="22.1" data-path="model-intro.html"><a href="model-intro.html#generacion-de-hipotesis-vs.confirmacion-de-hipotesis"><i class="fa fa-check"></i><b>22.1</b> Generación de hipótesis vs. confirmación de hipótesis</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="model-basics.html"><a href="model-basics.html"><i class="fa fa-check"></i><b>23</b> Model basics</a><ul>
+<li class="chapter" data-level="23.1" data-path="model-basics.html"><a href="model-basics.html#introduction-12"><i class="fa fa-check"></i><b>23.1</b> Introduction</a><ul>
+<li class="chapter" data-level="23.1.1" data-path="model-basics.html"><a href="model-basics.html#prerequisites-12"><i class="fa fa-check"></i><b>23.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="23.2" data-path="model-basics.html"><a href="model-basics.html#a-simple-model"><i class="fa fa-check"></i><b>23.2</b> A simple model</a><ul>
+<li class="chapter" data-level="23.2.1" data-path="model-basics.html"><a href="model-basics.html#exercises-50"><i class="fa fa-check"></i><b>23.2.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="23.3" data-path="model-basics.html"><a href="model-basics.html#visualising-models"><i class="fa fa-check"></i><b>23.3</b> Visualising models</a><ul>
+<li class="chapter" data-level="23.3.1" data-path="model-basics.html"><a href="model-basics.html#predictions"><i class="fa fa-check"></i><b>23.3.1</b> Predictions</a></li>
+<li class="chapter" data-level="23.3.2" data-path="model-basics.html"><a href="model-basics.html#residuals"><i class="fa fa-check"></i><b>23.3.2</b> Residuals</a></li>
+<li class="chapter" data-level="23.3.3" data-path="model-basics.html"><a href="model-basics.html#exercises-51"><i class="fa fa-check"></i><b>23.3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="model-basics.html"><a href="model-basics.html#formulas-and-model-families"><i class="fa fa-check"></i><b>23.4</b> Formulas and model families</a><ul>
+<li class="chapter" data-level="23.4.1" data-path="model-basics.html"><a href="model-basics.html#categorical-variables"><i class="fa fa-check"></i><b>23.4.1</b> Categorical variables</a></li>
+<li class="chapter" data-level="23.4.2" data-path="model-basics.html"><a href="model-basics.html#interactions-continuous-and-categorical"><i class="fa fa-check"></i><b>23.4.2</b> Interactions (continuous and categorical)</a></li>
+<li class="chapter" data-level="23.4.3" data-path="model-basics.html"><a href="model-basics.html#interactions-two-continuous"><i class="fa fa-check"></i><b>23.4.3</b> Interactions (two continuous)</a></li>
+<li class="chapter" data-level="23.4.4" data-path="model-basics.html"><a href="model-basics.html#transformations"><i class="fa fa-check"></i><b>23.4.4</b> Transformations</a></li>
+<li class="chapter" data-level="23.4.5" data-path="model-basics.html"><a href="model-basics.html#exercises-52"><i class="fa fa-check"></i><b>23.4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="23.5" data-path="model-basics.html"><a href="model-basics.html#missing-values-4"><i class="fa fa-check"></i><b>23.5</b> Missing values</a></li>
+<li class="chapter" data-level="23.6" data-path="model-basics.html"><a href="model-basics.html#other-model-families"><i class="fa fa-check"></i><b>23.6</b> Other model families</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="model-building.html"><a href="model-building.html"><i class="fa fa-check"></i><b>24</b> Model building</a><ul>
+<li class="chapter" data-level="24.1" data-path="model-building.html"><a href="model-building.html#introduction-13"><i class="fa fa-check"></i><b>24.1</b> Introduction</a><ul>
+<li class="chapter" data-level="24.1.1" data-path="model-building.html"><a href="model-building.html#prerequisites-13"><i class="fa fa-check"></i><b>24.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="24.2" data-path="model-building.html"><a href="model-building.html#diamond-prices"><i class="fa fa-check"></i><b>24.2</b> Why are low quality diamonds more expensive?</a><ul>
+<li class="chapter" data-level="24.2.1" data-path="model-building.html"><a href="model-building.html#price-and-carat"><i class="fa fa-check"></i><b>24.2.1</b> Price and carat</a></li>
+<li class="chapter" data-level="24.2.2" data-path="model-building.html"><a href="model-building.html#a-more-complicated-model"><i class="fa fa-check"></i><b>24.2.2</b> A more complicated model</a></li>
+<li class="chapter" data-level="24.2.3" data-path="model-building.html"><a href="model-building.html#exercises-53"><i class="fa fa-check"></i><b>24.2.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="24.3" data-path="model-building.html"><a href="model-building.html#what-affects-the-number-of-daily-flights"><i class="fa fa-check"></i><b>24.3</b> What affects the number of daily flights?</a><ul>
+<li class="chapter" data-level="24.3.1" data-path="model-building.html"><a href="model-building.html#day-of-week"><i class="fa fa-check"></i><b>24.3.1</b> Day of week</a></li>
+<li class="chapter" data-level="24.3.2" data-path="model-building.html"><a href="model-building.html#seasonal-saturday-effect"><i class="fa fa-check"></i><b>24.3.2</b> Seasonal Saturday effect</a></li>
+<li class="chapter" data-level="24.3.3" data-path="model-building.html"><a href="model-building.html#computed-variables"><i class="fa fa-check"></i><b>24.3.3</b> Computed variables</a></li>
+<li class="chapter" data-level="24.3.4" data-path="model-building.html"><a href="model-building.html#time-of-year-an-alternative-approach"><i class="fa fa-check"></i><b>24.3.4</b> Time of year: an alternative approach</a></li>
+<li class="chapter" data-level="24.3.5" data-path="model-building.html"><a href="model-building.html#exercises-54"><i class="fa fa-check"></i><b>24.3.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="24.4" data-path="model-building.html"><a href="model-building.html#learning-more-about-models"><i class="fa fa-check"></i><b>24.4</b> Learning more about models</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="muchos-modelos.html"><a href="muchos-modelos.html"><i class="fa fa-check"></i><b>25</b> Muchos modelos</a><ul>
+<li class="chapter" data-level="25.1" data-path="muchos-modelos.html"><a href="muchos-modelos.html#introduccion-2"><i class="fa fa-check"></i><b>25.1</b> Introducción</a><ul>
+<li class="chapter" data-level="25.1.1" data-path="muchos-modelos.html"><a href="muchos-modelos.html#prerrequisitos"><i class="fa fa-check"></i><b>25.1.1</b> Prerrequisitos</a></li>
+</ul></li>
+<li class="chapter" data-level="25.2" data-path="muchos-modelos.html"><a href="muchos-modelos.html#gapminder"><i class="fa fa-check"></i><b>25.2</b> gapminder</a><ul>
+<li class="chapter" data-level="25.2.1" data-path="muchos-modelos.html"><a href="muchos-modelos.html#datos-anidados"><i class="fa fa-check"></i><b>25.2.1</b> Datos anidados</a></li>
+<li class="chapter" data-level="25.2.2" data-path="muchos-modelos.html"><a href="muchos-modelos.html#columnas-lista"><i class="fa fa-check"></i><b>25.2.2</b> Columnas-lista</a></li>
+<li class="chapter" data-level="25.2.3" data-path="muchos-modelos.html"><a href="muchos-modelos.html#desanidando"><i class="fa fa-check"></i><b>25.2.3</b> Desanidando</a></li>
+<li class="chapter" data-level="25.2.4" data-path="muchos-modelos.html"><a href="muchos-modelos.html#calidad-del-modelo"><i class="fa fa-check"></i><b>25.2.4</b> Calidad del modelo</a></li>
+<li class="chapter" data-level="25.2.5" data-path="muchos-modelos.html"><a href="muchos-modelos.html#ejercicios-6"><i class="fa fa-check"></i><b>25.2.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="25.3" data-path="muchos-modelos.html"><a href="muchos-modelos.html#columnas-lista-1"><i class="fa fa-check"></i><b>25.3</b> Columnas-lista</a></li>
+<li class="chapter" data-level="25.4" data-path="muchos-modelos.html"><a href="muchos-modelos.html#creando-columnas-lista"><i class="fa fa-check"></i><b>25.4</b> Creando columnas-lista</a><ul>
+<li class="chapter" data-level="25.4.1" data-path="muchos-modelos.html"><a href="muchos-modelos.html#con-anidacion"><i class="fa fa-check"></i><b>25.4.1</b> Con anidación</a></li>
+<li class="chapter" data-level="25.4.2" data-path="muchos-modelos.html"><a href="muchos-modelos.html#a-partir-de-funciones-vectorizadas"><i class="fa fa-check"></i><b>25.4.2</b> A partir de funciones vectorizadas</a></li>
+<li class="chapter" data-level="25.4.3" data-path="muchos-modelos.html"><a href="muchos-modelos.html#a-partir-de-medidas-de-resumen-con-mas-de-un-valor"><i class="fa fa-check"></i><b>25.4.3</b> A partir de medidas de resumen con más de un valor</a></li>
+<li class="chapter" data-level="25.4.4" data-path="muchos-modelos.html"><a href="muchos-modelos.html#a-partir-de-una-lista-nombrada"><i class="fa fa-check"></i><b>25.4.4</b> A partir de una lista nombrada</a></li>
+<li class="chapter" data-level="25.4.5" data-path="muchos-modelos.html"><a href="muchos-modelos.html#ejercicios-7"><i class="fa fa-check"></i><b>25.4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="25.5" data-path="muchos-modelos.html"><a href="muchos-modelos.html#simplificando-columnas-lista"><i class="fa fa-check"></i><b>25.5</b> Simplificando columnas-lista</a><ul>
+<li class="chapter" data-level="25.5.1" data-path="muchos-modelos.html"><a href="muchos-modelos.html#lista-a-vector"><i class="fa fa-check"></i><b>25.5.1</b> Lista a vector</a></li>
+<li class="chapter" data-level="25.5.2" data-path="muchos-modelos.html"><a href="muchos-modelos.html#desanidando-1"><i class="fa fa-check"></i><b>25.5.2</b> Desanidando</a></li>
+<li class="chapter" data-level="25.5.3" data-path="muchos-modelos.html"><a href="muchos-modelos.html#ejercicios-8"><i class="fa fa-check"></i><b>25.5.3</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="25.6" data-path="muchos-modelos.html"><a href="muchos-modelos.html#haciendo-datos-ordenados-con-broom"><i class="fa fa-check"></i><b>25.6</b> Haciendo datos ordenados con broom</a></li>
+</ul></li>
+<li class="chapter" data-level="26" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>26</b> R Markdown</a><ul>
+<li class="chapter" data-level="26.1" data-path="r-markdown.html"><a href="r-markdown.html#introduction-14"><i class="fa fa-check"></i><b>26.1</b> Introduction</a><ul>
+<li class="chapter" data-level="26.1.1" data-path="r-markdown.html"><a href="r-markdown.html#prerequisites-14"><i class="fa fa-check"></i><b>26.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="26.2" data-path="r-markdown.html"><a href="r-markdown.html#r-markdown-basics"><i class="fa fa-check"></i><b>26.2</b> R Markdown basics</a><ul>
+<li class="chapter" data-level="26.2.1" data-path="r-markdown.html"><a href="r-markdown.html#exercises-55"><i class="fa fa-check"></i><b>26.2.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="26.3" data-path="r-markdown.html"><a href="r-markdown.html#text-formatting-with-markdown"><i class="fa fa-check"></i><b>26.3</b> Text formatting with Markdown</a><ul>
+<li class="chapter" data-level="26.3.1" data-path="r-markdown.html"><a href="r-markdown.html#exercises-56"><i class="fa fa-check"></i><b>26.3.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="26.4" data-path="r-markdown.html"><a href="r-markdown.html#code-chunks"><i class="fa fa-check"></i><b>26.4</b> Code chunks</a><ul>
+<li class="chapter" data-level="26.4.1" data-path="r-markdown.html"><a href="r-markdown.html#chunk-name"><i class="fa fa-check"></i><b>26.4.1</b> Chunk name</a></li>
+<li class="chapter" data-level="26.4.2" data-path="r-markdown.html"><a href="r-markdown.html#chunk-options"><i class="fa fa-check"></i><b>26.4.2</b> Chunk options</a></li>
+<li class="chapter" data-level="26.4.3" data-path="r-markdown.html"><a href="r-markdown.html#table"><i class="fa fa-check"></i><b>26.4.3</b> Table</a></li>
+<li class="chapter" data-level="26.4.4" data-path="r-markdown.html"><a href="r-markdown.html#caching"><i class="fa fa-check"></i><b>26.4.4</b> Caching</a></li>
+<li class="chapter" data-level="26.4.5" data-path="r-markdown.html"><a href="r-markdown.html#global-options"><i class="fa fa-check"></i><b>26.4.5</b> Global options</a></li>
+<li class="chapter" data-level="26.4.6" data-path="r-markdown.html"><a href="r-markdown.html#inline-code"><i class="fa fa-check"></i><b>26.4.6</b> Inline code</a></li>
+<li class="chapter" data-level="26.4.7" data-path="r-markdown.html"><a href="r-markdown.html#exercises-57"><i class="fa fa-check"></i><b>26.4.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="26.5" data-path="r-markdown.html"><a href="r-markdown.html#troubleshooting"><i class="fa fa-check"></i><b>26.5</b> Troubleshooting</a></li>
+<li class="chapter" data-level="26.6" data-path="r-markdown.html"><a href="r-markdown.html#yaml-header"><i class="fa fa-check"></i><b>26.6</b> YAML header</a><ul>
+<li class="chapter" data-level="26.6.1" data-path="r-markdown.html"><a href="r-markdown.html#parameters"><i class="fa fa-check"></i><b>26.6.1</b> Parameters</a></li>
+<li class="chapter" data-level="26.6.2" data-path="r-markdown.html"><a href="r-markdown.html#bibliographies-and-citations"><i class="fa fa-check"></i><b>26.6.2</b> Bibliographies and Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="26.7" data-path="r-markdown.html"><a href="r-markdown.html#learning-more-2"><i class="fa fa-check"></i><b>26.7</b> Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="27" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html"><i class="fa fa-check"></i><b>27</b> Graphics for communication</a><ul>
+<li class="chapter" data-level="27.1" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#introduction-15"><i class="fa fa-check"></i><b>27.1</b> Introduction</a><ul>
+<li class="chapter" data-level="27.1.1" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#prerequisites-15"><i class="fa fa-check"></i><b>27.1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="27.2" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#label"><i class="fa fa-check"></i><b>27.2</b> Label</a><ul>
+<li class="chapter" data-level="27.2.1" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#exercises-58"><i class="fa fa-check"></i><b>27.2.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="27.3" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#annotations"><i class="fa fa-check"></i><b>27.3</b> Annotations</a><ul>
+<li class="chapter" data-level="27.3.1" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#exercises-59"><i class="fa fa-check"></i><b>27.3.1</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="27.4" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#scales"><i class="fa fa-check"></i><b>27.4</b> Scales</a><ul>
+<li class="chapter" data-level="27.4.1" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#axis-ticks-and-legend-keys"><i class="fa fa-check"></i><b>27.4.1</b> Axis ticks and legend keys</a></li>
+<li class="chapter" data-level="27.4.2" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#legend-layout"><i class="fa fa-check"></i><b>27.4.2</b> Legend layout</a></li>
+<li class="chapter" data-level="27.4.3" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#replacing-a-scale"><i class="fa fa-check"></i><b>27.4.3</b> Replacing a scale</a></li>
+<li class="chapter" data-level="27.4.4" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#exercises-60"><i class="fa fa-check"></i><b>27.4.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="27.5" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#zooming"><i class="fa fa-check"></i><b>27.5</b> Zooming</a></li>
+<li class="chapter" data-level="27.6" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#themes"><i class="fa fa-check"></i><b>27.6</b> Themes</a></li>
+<li class="chapter" data-level="27.7" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#saving-your-plots"><i class="fa fa-check"></i><b>27.7</b> Saving your plots</a><ul>
+<li class="chapter" data-level="27.7.1" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#figure-sizing"><i class="fa fa-check"></i><b>27.7.1</b> Figure sizing</a></li>
+<li class="chapter" data-level="27.7.2" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#other-important-options"><i class="fa fa-check"></i><b>27.7.2</b> Other important options</a></li>
+</ul></li>
+<li class="chapter" data-level="27.8" data-path="graphics-for-communication.html"><a href="graphics-for-communication.html#learning-more-3"><i class="fa fa-check"></i><b>27.8</b> Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="28" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html"><i class="fa fa-check"></i><b>28</b> R Markdown formats</a><ul>
+<li class="chapter" data-level="28.1" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html#introduction-16"><i class="fa fa-check"></i><b>28.1</b> Introduction</a></li>
+<li class="chapter" data-level="28.2" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html#output-options"><i class="fa fa-check"></i><b>28.2</b> Output options</a></li>
+<li class="chapter" data-level="28.3" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html#documents"><i class="fa fa-check"></i><b>28.3</b> Documents</a></li>
+<li class="chapter" data-level="28.4" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html#notebooks"><i class="fa fa-check"></i><b>28.4</b> Notebooks</a></li>
+<li class="chapter" data-level="28.5" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html#presentations"><i class="fa fa-check"></i><b>28.5</b> Presentations</a></li>
+<li class="chapter" data-level="28.6" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html#dashboards"><i class="fa fa-check"></i><b>28.6</b> Dashboards</a></li>
+<li class="chapter" data-level="28.7" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html#interactivity"><i class="fa fa-check"></i><b>28.7</b> Interactivity</a><ul>
+<li class="chapter" data-level="28.7.1" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html#htmlwidgets"><i class="fa fa-check"></i><b>28.7.1</b> htmlwidgets</a></li>
+<li class="chapter" data-level="28.7.2" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html#shiny"><i class="fa fa-check"></i><b>28.7.2</b> Shiny</a></li>
+</ul></li>
+<li class="chapter" data-level="28.8" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html#websites"><i class="fa fa-check"></i><b>28.8</b> Websites</a></li>
+<li class="chapter" data-level="28.9" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html#other-formats"><i class="fa fa-check"></i><b>28.9</b> Other formats</a></li>
+<li class="chapter" data-level="28.10" data-path="r-markdown-formats.html"><a href="r-markdown-formats.html#learning-more-4"><i class="fa fa-check"></i><b>28.10</b> Learning more</a></li>
+</ul></li>
+<li class="chapter" data-level="29" data-path="r-markdown-workflow.html"><a href="r-markdown-workflow.html"><i class="fa fa-check"></i><b>29</b> R Markdown workflow</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R para Ciencia de Datos</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="muchos-modelos" class="section level1">
+<h1><span class="header-section-number">25</span> Muchos modelos</h1>
+<div id="introduccion-2" class="section level2">
+<h2><span class="header-section-number">25.1</span> Introducción</h2>
+<p>En este capítulo vas a aprender tres ideas poderosas que te van a ayudar a trabajar fácilmente con un gran número de modelos:</p>
+<ol style="list-style-type: decimal">
+<li><p>Usar muchos modelos simples para entender mejor conjuntos de datos complejos.</p></li>
+<li><p>Usar columnas-lista (<em>list-columns</em>) para almacenar estructuras de datos arbitrarias en un <em>data frame</em>.
+Ésto, por ejemplo, te permitirá tener una columna que contenga modelos lineales.</p></li>
+<li><p>Usar el paquete <strong>broom</strong>, de David Robinson, para transformar modelos en datos ordenados.
+Ésta es una técnica poderosa para trabajar con un gran número de modelos
+porque una vez que tienes datos ordenados, puedes aplicar todas las técnicas que
+has aprendido anteriormente en el libro.</p></li>
+</ol>
+<p>Empezaremos entrando de lleno en un ejemplo motivador usando datos sobre la esperanza de vida alrededor del mundo. Es un conjunto de datos pequeño pero que ilustra cuán importante puede ser modelar para mejorar tus visualizaciones. Utilizaremos un número grande de modelos simples para extraer algunas de las señales más fuertes y que podamos ver las sutiles que permanecen. También veremos cómo las medidas de resumen de los modelos nos pueden ayudar a encontrar datos atípicos y tendencias inusuales.</p>
+<p>Las siguientes secciones ahondarán en más detalles acerca de las técnicas:</p>
+<ol style="list-style-type: decimal">
+<li><p>En <a href="muchos-modelos.html#columnas-lista-1">columnas-lista</a>, aprenderás más acerca de la estructura de datos columna-lista,
+y por qué es válido poner listas en <em>data frames</em>.</p></li>
+<li><p>En <a href="muchos-modelos.html#creando-columnas-lista">creando columnas-lista</a>, aprenderás las tres maneras principales en las que
+crearás columnas-lista.</p></li>
+<li><p>En <a href="muchos-modelos.html#simplificando-columnas-lista">simplificando columnas-lista</a> aprenderás cómo convertir columnas-lista de vuelta
+a vectores atómicos regulares (o conjuntos de vectores atómicos) para que puedas trabajar
+con ellos más fácilmente.</p></li>
+<li><p>En <a href="muchos-modelos.html#haciendo-datos-ordenados-con-broom">haciendo datos ordenados con broom</a>, aprenderás sobre el conjunto de herramientas completo
+provisto por <strong>broom</strong> (del inglés <em>escoba</em>), y verás cómo puede ser aplicado a otros tipos de
+estructuras de datos.</p></li>
+</ol>
+<p>Este capítulo es aspiracional en cierta medida: si este libro es tu primera introducción a R, este capítulo es probable que sea una lucha para ti. Requiere que tengas profundamente internalizadas ideas acerca de modelamiento, estructuras de datos, e iteración. Así que no te preocupes si no lo entiendes — solo aparta este capítulo por un par de meses, y vuelve cuando quieras ejercitar tu cerebro.</p>
+<div id="prerrequisitos" class="section level3">
+<h3><span class="header-section-number">25.1.1</span> Prerrequisitos</h3>
+<p>Trabajar con muchos modelos requiere muchos de los paquetes del <strong>tidyverse</strong> (para exploración de datos, doma y programación) y <strong>modelr</strong> para facilitar el modelamiento.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(modelr)
+<span class="kw">library</span>(tidyverse)</code></pre>
+</div>
+</div>
+<div id="gapminder" class="section level2">
+<h2><span class="header-section-number">25.2</span> gapminder</h2>
+<p>Para motivar el poder de muchos modelos simples, vamos a mirar los datos de “gapminder”. Estos datos fueron popularizados por Hans Rosling, un doctor y estadístico sueco. Si nunca has escuchado de él, para de leer este capítulo ahora mismo y ve a mirar uno de sus videos! Él es un presentador de datos fantástico e ilustra cómo puedes usar datos para presentar una historia convincente. Un buen lugar para empezar es este video corto filmado en conjunto con la BBC: <a href="https://www.youtube.com/watch?v=jbkSRLYSojo" class="uri">https://www.youtube.com/watch?v=jbkSRLYSojo</a>.</p>
+<p>Los datos de gapminder resumen la progresión de países a través del tiempo, mirando estadísticos como esperanza de vida y PIB. Los datos son de fácil acceso en R, gracias a Jenny Bryan que creó el paquete <strong>gapminder</strong>. Utilizaremos la versión en español contenida en el paquete <strong>datos</strong> (TODO: ver cómo poner esto):</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(datos)
+paises
+<span class="co">#&gt; # A tibble: 1,704 x 6</span>
+<span class="co">#&gt;   pais       continente  anio esperanza_de_vida poblacion pib_per_capita</span>
+<span class="co">#&gt;   &lt;fct&gt;      &lt;fct&gt;      &lt;int&gt;             &lt;dbl&gt;     &lt;int&gt;          &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 Afganistán Asia        1952              28.8   8425333           779.</span>
+<span class="co">#&gt; 2 Afganistán Asia        1957              30.3   9240934           821.</span>
+<span class="co">#&gt; 3 Afganistán Asia        1962              32.0  10267083           853.</span>
+<span class="co">#&gt; 4 Afganistán Asia        1967              34.0  11537966           836.</span>
+<span class="co">#&gt; 5 Afganistán Asia        1972              36.1  13079460           740.</span>
+<span class="co">#&gt; 6 Afganistán Asia        1977              38.4  14880372           786.</span>
+<span class="co">#&gt; # ... with 1,698 more rows</span></code></pre>
+<p>En este caso de estudio, nos enfocaremos en solo tres variables para responder la pregunta “¿Cómo la esperanza de vida (<code>esperanza_de_vida</code>) cambia a través del tiempo (<code>anio</code>) para cada país (<code>pais</code>)?”. Un buen lugar para empezar es con un gráfico:</p>
+<pre class="sourceCode r"><code class="sourceCode r">paises <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, esperanza_de_vida, <span class="dt">group =</span> pais)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</code></pre>
+<p><img src="model-many_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Es un conjunto de datos pequeño: solo tiene ~1,700 observaciones y 3 variables. Pero aún así es difícil ver qué está pasando! En general, parece que la esperanza de vida ha estado mejorando en forma constante. Sin embargo, si miras de cerca, puedes notar algunos países que no siguen este patrón. ¿Cómo podemos hacer que esos países se vean más fácilmente?</p>
+<p>Una forma es usar el mismo enfoque que en el último capítulo: hay una señal fuerte (en general crecimiento lineal) que hace difícil ver tendencias más sutiles. Separaremos estos factores estimando un modelo con una tendencia lineal. El modelo captura el crecimiento estable en el tiempo, y los residuos mostrarán lo que queda fuera.</p>
+<p>Ya sabes cómo hacer eso si tenemos un solo país:</p>
+<pre class="sourceCode r"><code class="sourceCode r">nz &lt;-<span class="st"> </span><span class="kw">filter</span>(paises, pais <span class="op">==</span><span class="st"> &quot;Nueva Zelandia&quot;</span>)
+nz <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, esperanza_de_vida)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Datos completos = &quot;</span>)
+
+nz_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(esperanza_de_vida <span class="op">~</span><span class="st"> </span>anio, <span class="dt">data =</span> nz)
+nz <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">add_predictions</span>(nz_mod) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, pred)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Tendencia lineal + &quot;</span>)
+
+nz <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">add_residuals</span>(nz_mod) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, resid)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">colour =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Patrón restante&quot;</span>)</code></pre>
+<p><img src="model-many_files/figure-html/unnamed-chunk-4-1.png" width="33%" /><img src="model-many_files/figure-html/unnamed-chunk-4-2.png" width="33%" /><img src="model-many_files/figure-html/unnamed-chunk-4-3.png" width="33%" /></p>
+<p>¿Cómo podemos ajustar fácilmente ese modelo para cada país?</p>
+<div id="datos-anidados" class="section level3">
+<h3><span class="header-section-number">25.2.1</span> Datos anidados</h3>
+<p>Te puedes imaginar copiando y pegando ese código múltiples veces; pero ya has aprendido una mejor forma! Extrae el código en común con una función y repítelo usando una función map (TODO: no me queda claro que tenga sentido poner que el nombre de esta función venga del inglés, y no sé si ponerla en cursiva) de <strong>purrr</strong>. Este problema se estructura un poco diferente respecto a lo que has visto antes. En lugar de repetir una acción por cada variable, queremos repetirla para cada país, un subconjunto de filas. Para hacer eso, necesitamos una nueva estructura de datos: el <strong><em>data frame</em> anidado</strong> (<em>nested data frame</em>). Para crear un <em>data frame</em> anidado empezamos con un <em>data frame</em> agrupado, y lo “anidamos”:</p>
+<pre class="sourceCode r"><code class="sourceCode r">por_pais &lt;-<span class="st"> </span>paises <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(pais, continente) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">nest</span>()
+
+por_pais
+<span class="co">#&gt; # A tibble: 142 x 3</span>
+<span class="co">#&gt;   pais       continente data             </span>
+<span class="co">#&gt;   &lt;fct&gt;      &lt;fct&gt;      &lt;list&gt;           </span>
+<span class="co">#&gt; 1 Afganistán Asia       &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 2 Albania    Europa     &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 3 Argelia    África     &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 4 Angola     África     &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 5 Argentina  Américas   &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 6 Australia  Oceanía    &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; # ... with 136 more rows</span></code></pre>
+<p>(Estoy haciendo un poco de trampa agrupando por <code>continente</code> y <code>pais</code> al mismo tiempo. Dado el <code>pais</code>, <code>continente</code> es fijo, así que no agrega ningún grupo más, pero es una forma fácil de llevarnos una variable adicional para el camino.)</p>
+<p>Ésto crea un <em>data frame</em> que tiene una fila por grupo (por país), y una columna bastante inusual: <code>data</code>. <code>data</code> es una lista de <em>data frames</em> (o <em>tibbles</em>, para ser precisos). Esto parece una idea un poco loca: tenemos un <em>data frame</em> con una columna que es una lista de otros <em>data frames</em>! Explicaré brevemente por qué pienso que es una buena idea.</p>
+<p>La columna <code>data</code> es un poco difícil de examinar porque es una lista moderadamente complicada, y todavía estamos trabajando para tener buenas herramientas para explorar estos objetos. Desafortunadamente usar <code>str()</code> no es recomendable porque usualmente producirá un <em>output</em> (salida de código) muy extenso. Pero si extraes un solo elemento de la columna <code>data</code> verás que contiene todos los datos para ese país (en este caso, Afganistán).</p>
+<pre class="sourceCode r"><code class="sourceCode r">por_pais<span class="op">$</span>data[[<span class="dv">1</span>]]
+<span class="co">#&gt; # A tibble: 12 x 4</span>
+<span class="co">#&gt;    anio esperanza_de_vida poblacion pib_per_capita</span>
+<span class="co">#&gt;   &lt;int&gt;             &lt;dbl&gt;     &lt;int&gt;          &lt;dbl&gt;</span>
+<span class="co">#&gt; 1  1952              28.8   8425333           779.</span>
+<span class="co">#&gt; 2  1957              30.3   9240934           821.</span>
+<span class="co">#&gt; 3  1962              32.0  10267083           853.</span>
+<span class="co">#&gt; 4  1967              34.0  11537966           836.</span>
+<span class="co">#&gt; 5  1972              36.1  13079460           740.</span>
+<span class="co">#&gt; 6  1977              38.4  14880372           786.</span>
+<span class="co">#&gt; # ... with 6 more rows</span></code></pre>
+<p>Nota la diferencia entre un <em>data frame</em> agrupado estándar y un <em>data frame</em> anidado: en un <em>data frame</em> agrupado, cada fila es una observación; en un <em>data frame</em> anidado, cada fila es un grupo. Otra forma de pensar en un conjunto de datos anidado es que ahora tenemos una meta-observación: una fila que representa todo el transcurso de tiempo para un país, en lugar de solo un punto en el tiempo.</p>
+</div>
+<div id="columnas-lista" class="section level3">
+<h3><span class="header-section-number">25.2.2</span> Columnas-lista</h3>
+<p>Ahora que tenemos nuestro <em>data frame</em> anidado, estamos en una buena posición para ajustar algunos modelos. Tenemos una función para ajustar modelos:</p>
+<pre class="sourceCode r"><code class="sourceCode r">modelo_pais &lt;-<span class="st"> </span><span class="cf">function</span>(df) {
+  <span class="kw">lm</span>(esperanza_de_vida <span class="op">~</span><span class="st"> </span>anio, <span class="dt">data =</span> df)
+}</code></pre>
+<p>Y queremos aplicarlo a cada <em>data frame</em>. Los <em>data frames</em> están en una lista, así que podemos usar <code>purrr::map()</code> para aplicar <code>modelo_pais</code> a cada elemento:</p>
+<pre class="sourceCode r"><code class="sourceCode r">modelos &lt;-<span class="st"> </span><span class="kw">map</span>(por_pais<span class="op">$</span>data, modelo_pais)</code></pre>
+<p>Sin embargo, en lugar de dejar la lista de modelos como un objeto suelto, creo que es mejor almacenarlo como una columna en el <em>data frame</em> <code>por_pais</code>. Almacenar objetos relacionados en columnas es una parte clave del valor de los <em>data frames</em>, y por eso pienso que las columnas-lista son tan buena idea. En el transcurso de nuetro trabajo con estos países, vamos a tener muchas listas donde tenemos un elemento por país. ¿Por qué no almacenarlos todos juntos en un <em>data frame</em>?</p>
+<p>En otras palabras, en lugar de crear un nuevo objeto en el entorno global, vamos a crear una nueva variable en el <em>data frame</em> <code>por_pais</code>. Ese es un trabajo para <code>dplyr::mutate()</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r">por_pais &lt;-<span class="st"> </span>por_pais <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">modelo =</span> <span class="kw">map</span>(data, modelo_pais))
+por_pais
+<span class="co">#&gt; # A tibble: 142 x 4</span>
+<span class="co">#&gt;   pais       continente data              modelo  </span>
+<span class="co">#&gt;   &lt;fct&gt;      &lt;fct&gt;      &lt;list&gt;            &lt;list&gt;  </span>
+<span class="co">#&gt; 1 Afganistán Asia       &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 2 Albania    Europa     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 3 Argelia    África     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 4 Angola     África     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 5 Argentina  Américas   &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 6 Australia  Oceanía    &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; # ... with 136 more rows</span></code></pre>
+<p>Esto tiene una gran ventaja: como todos los objetos relacionados están almacenados juntos, no necesitas manualmente mantenerlos sincronizados cuando filtras o reordenas. La semántica del <em>data frame</em> se ocupa de esto por ti:</p>
+<pre class="sourceCode r"><code class="sourceCode r">por_pais <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(continente <span class="op">==</span><span class="st"> &quot;Europa&quot;</span>)
+<span class="co">#&gt; # A tibble: 30 x 4</span>
+<span class="co">#&gt;   pais                 continente data              modelo  </span>
+<span class="co">#&gt;   &lt;fct&gt;                &lt;fct&gt;      &lt;list&gt;            &lt;list&gt;  </span>
+<span class="co">#&gt; 1 Albania              Europa     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 2 Austria              Europa     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 3 Bélgica              Europa     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 4 Bosnia y Herzegovina Europa     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 5 Bulgaria             Europa     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 6 Croacia              Europa     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; # ... with 24 more rows</span>
+por_pais <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(continente, pais)
+<span class="co">#&gt; # A tibble: 142 x 4</span>
+<span class="co">#&gt;   pais         continente data              modelo  </span>
+<span class="co">#&gt;   &lt;fct&gt;        &lt;fct&gt;      &lt;list&gt;            &lt;list&gt;  </span>
+<span class="co">#&gt; 1 Argelia      África     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 2 Angola       África     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 3 Benin        África     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 4 Botswana     África     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 5 Burkina Faso África     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; 6 Burundi      África     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt;</span>
+<span class="co">#&gt; # ... with 136 more rows</span></code></pre>
+<p>Si tu lista de <em>data frames</em> y lista de modelos fueran objetos separados, tienes (TODO: acá usaría “tendrías” pero no es lo que usa el original) que acordarte de que cuando reordenas o seleccionas un subconjunto de un vector, necesitas reordenar o seleccionar el subconjunto de todos los demás para mantenerlos sincronizados. Si te olvidas, tu código va a seguir funcionando, pero va a devolver la respuesta equivocada!</p>
+</div>
+<div id="desanidando" class="section level3">
+<h3><span class="header-section-number">25.2.3</span> Desanidando</h3>
+<p>Previamente calculamos los residuos de un único modelo con un conjunto de datos también único. Ahora tenemos 142 <em>data frames</em> y 142 modelos. Para calcular los residuos, necesitamos llamar a la función <code>add_residuals()</code> (del inglés <em>adicionar residuos</em>) con cada par modelo-datos:</p>
+<pre class="sourceCode r"><code class="sourceCode r">por_pais &lt;-<span class="st"> </span>por_pais <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">residuos =</span> <span class="kw">map2</span>(data, modelo, add_residuals)
+  )
+por_pais
+<span class="co">#&gt; # A tibble: 142 x 5</span>
+<span class="co">#&gt;   pais       continente data              modelo   residuos         </span>
+<span class="co">#&gt;   &lt;fct&gt;      &lt;fct&gt;      &lt;list&gt;            &lt;list&gt;   &lt;list&gt;           </span>
+<span class="co">#&gt; 1 Afganistán Asia       &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt; &lt;tibble [12 × 5]&gt;</span>
+<span class="co">#&gt; 2 Albania    Europa     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt; &lt;tibble [12 × 5]&gt;</span>
+<span class="co">#&gt; 3 Argelia    África     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt; &lt;tibble [12 × 5]&gt;</span>
+<span class="co">#&gt; 4 Angola     África     &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt; &lt;tibble [12 × 5]&gt;</span>
+<span class="co">#&gt; 5 Argentina  Américas   &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt; &lt;tibble [12 × 5]&gt;</span>
+<span class="co">#&gt; 6 Australia  Oceanía    &lt;tibble [12 × 4]&gt; &lt;S3: lm&gt; &lt;tibble [12 × 5]&gt;</span>
+<span class="co">#&gt; # ... with 136 more rows</span></code></pre>
+<p>¿Pero cómo puedes graficar una lista de <em>data frames</em>? En lugar de luchar para contestar esa pregunta, transformemos la lista de <em>data frames</em> de vuelta en un <em>data frame</em> regular. Previamente usamos <code>nest()</code> (del inglés <em>anidar</em>) para transformar un <em>data frame</em> regular en uno anidado, y ahora desanidamos con <code>unnest()</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r">residuos &lt;-<span class="st"> </span><span class="kw">unnest</span>(por_pais, residuos)
+residuos
+<span class="co">#&gt; # A tibble: 1,704 x 7</span>
+<span class="co">#&gt;   pais  continente  anio esperanza_de_vi… poblacion pib_per_capita   resid</span>
+<span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt;      &lt;int&gt;            &lt;dbl&gt;     &lt;int&gt;          &lt;dbl&gt;   &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 Afga… Asia        1952             28.8   8425333           779. -1.11  </span>
+<span class="co">#&gt; 2 Afga… Asia        1957             30.3   9240934           821. -0.952 </span>
+<span class="co">#&gt; 3 Afga… Asia        1962             32.0  10267083           853. -0.664 </span>
+<span class="co">#&gt; 4 Afga… Asia        1967             34.0  11537966           836. -0.0172</span>
+<span class="co">#&gt; 5 Afga… Asia        1972             36.1  13079460           740.  0.674 </span>
+<span class="co">#&gt; 6 Afga… Asia        1977             38.4  14880372           786.  1.65  </span>
+<span class="co">#&gt; # ... with 1,698 more rows</span></code></pre>
+<p>Nota que cada columna regular está repetida una vez por cada fila en la columna anidada.</p>
+<p>Ahora tenemos un <em>data frame</em> regular, podemos graficar los residuos:</p>
+<pre class="sourceCode r"><code class="sourceCode r">residuos <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, resid)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group =</span> pais), <span class="dt">alpha =</span> <span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>)
+<span class="co">#&gt; `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</span></code></pre>
+<p><img src="model-many_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Separar facetas por continente es particularmente revelador:</p>
+<pre class="sourceCode r"><code class="sourceCode r">residuos <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, resid, <span class="dt">group =</span> pais)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">alpha =</span> <span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span>continente)</code></pre>
+<p><img src="model-many_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Parece que hemos perdido algunos patrones suaves. También hay algo interesante pasando en África: vemos algunos residuos muy grandes lo que sugiere que nuestro modelo no está ajustando muy bien. Exploraremos más eso en la próxima sección, atacando el problema desde un ángulo un poco diferente.</p>
+</div>
+<div id="calidad-del-modelo" class="section level3">
+<h3><span class="header-section-number">25.2.4</span> Calidad del modelo</h3>
+<p>En lugar de examinar los residuos del modelo, podríamos examinar algunas medidas generales de la calidad del modelo. Aprendiste cómo calcular algunas medidas específicas en el capítulo anterior. Aquí mostraremos un enfoque diferente usando el paquete <strong>broom</strong>. El paquete <strong>broom</strong> provee un conjunto de funciones generales para transformar modelos en datos ordenados. Aquí utilizaremos <code>broom::glance()</code> (del inglés <em>vistazo</em>) para extraer algunas métricas de la calidad del modelo. Si lo aplicamos a un modelo, obtenemos un <em>data frame</em> con una única fila:</p>
+<pre class="sourceCode r"><code class="sourceCode r">broom<span class="op">::</span><span class="kw">glance</span>(nz_mod)
+<span class="co">#&gt; # A tibble: 1 x 11</span>
+<span class="co">#&gt;   r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC</span>
+<span class="co">#&gt; *     &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1     0.954         0.949 0.804      205. 5.41e-8     2  -13.3  32.6  34.1</span>
+<span class="co">#&gt; # ... with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;</span></code></pre>
+<p>Podemos usar <code>mutate()</code> y <code>unnest()</code> para crear un <em>data frame</em> con una fila por cada país:</p>
+<pre class="sourceCode r"><code class="sourceCode r">por_pais <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">glance =</span> <span class="kw">map</span>(modelo, broom<span class="op">::</span>glance)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">unnest</span>(glance)
+<span class="co">#&gt; # A tibble: 142 x 16</span>
+<span class="co">#&gt;   pais  continente data  modelo residuos r.squared adj.r.squared sigma</span>
+<span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt;      &lt;lis&gt; &lt;list&gt; &lt;list&gt;       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 Afga… Asia       &lt;tib… &lt;S3: … &lt;tibble…     0.948         0.942 1.22 </span>
+<span class="co">#&gt; 2 Alba… Europa     &lt;tib… &lt;S3: … &lt;tibble…     0.911         0.902 1.98 </span>
+<span class="co">#&gt; 3 Arge… África     &lt;tib… &lt;S3: … &lt;tibble…     0.985         0.984 1.32 </span>
+<span class="co">#&gt; 4 Ango… África     &lt;tib… &lt;S3: … &lt;tibble…     0.888         0.877 1.41 </span>
+<span class="co">#&gt; 5 Arge… Américas   &lt;tib… &lt;S3: … &lt;tibble…     0.996         0.995 0.292</span>
+<span class="co">#&gt; 6 Aust… Oceanía    &lt;tib… &lt;S3: … &lt;tibble…     0.980         0.978 0.621</span>
+<span class="co">#&gt; # ... with 136 more rows, and 8 more variables: statistic &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   p.value &lt;dbl&gt;, df &lt;int&gt;, logLik &lt;dbl&gt;, AIC &lt;dbl&gt;, BIC &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   deviance &lt;dbl&gt;, df.residual &lt;int&gt;</span></code></pre>
+<p>Este no es exactamente el <em>output</em> que queremos, porque aún incluye todas las columnas que son una lista. Éste es el comportamiento por defecto cuando <code>unnest()</code> trabaja sobre <em>data frames</em> con una única fila. Para suprimir esas columnas usamos <code>.drop = TRUE</code> (<code>drop</code> — del inglés <em>descartar</em>):</p>
+<pre class="sourceCode r"><code class="sourceCode r">glance &lt;-<span class="st"> </span>por_pais <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">glance =</span> <span class="kw">map</span>(modelo, broom<span class="op">::</span>glance)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">unnest</span>(glance, <span class="dt">.drop =</span> <span class="ot">TRUE</span>)
+glance
+<span class="co">#&gt; # A tibble: 142 x 13</span>
+<span class="co">#&gt;   pais  continente r.squared adj.r.squared sigma statistic  p.value    df</span>
+<span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt;          &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;</span>
+<span class="co">#&gt; 1 Afga… Asia           0.948         0.942 1.22      181.  9.84e- 8     2</span>
+<span class="co">#&gt; 2 Alba… Europa         0.911         0.902 1.98      102.  1.46e- 6     2</span>
+<span class="co">#&gt; 3 Arge… África         0.985         0.984 1.32      662.  1.81e-10     2</span>
+<span class="co">#&gt; 4 Ango… África         0.888         0.877 1.41       79.1 4.59e- 6     2</span>
+<span class="co">#&gt; 5 Arge… Américas       0.996         0.995 0.292    2246.  4.22e-13     2</span>
+<span class="co">#&gt; 6 Aust… Oceanía        0.980         0.978 0.621     481.  8.67e-10     2</span>
+<span class="co">#&gt; # ... with 136 more rows, and 5 more variables: logLik &lt;dbl&gt;, AIC &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   BIC &lt;dbl&gt;, deviance &lt;dbl&gt;, df.residual &lt;int&gt;</span></code></pre>
+<p>(Presta atención a las variables que no se imprimieron: hay mucha información útil allí.)</p>
+<p>Con este <em>data frame</em>, podemos empezar a buscar modelos que no se ajustan bien:</p>
+<pre class="sourceCode r"><code class="sourceCode r">glance <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(r.squared)
+<span class="co">#&gt; # A tibble: 142 x 13</span>
+<span class="co">#&gt;   pais  continente r.squared adj.r.squared sigma statistic p.value    df</span>
+<span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt;          &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;</span>
+<span class="co">#&gt; 1 Ruan… África        0.0172      -0.0811   6.56     0.175   0.685     2</span>
+<span class="co">#&gt; 2 Bots… África        0.0340      -0.0626   6.11     0.352   0.566     2</span>
+<span class="co">#&gt; 3 Zimb… África        0.0562      -0.0381   7.21     0.596   0.458     2</span>
+<span class="co">#&gt; 4 Zamb… África        0.0598      -0.0342   4.53     0.636   0.444     2</span>
+<span class="co">#&gt; 5 Swaz… África        0.0682      -0.0250   6.64     0.732   0.412     2</span>
+<span class="co">#&gt; 6 Leso… África        0.0849      -0.00666  5.93     0.927   0.358     2</span>
+<span class="co">#&gt; # ... with 136 more rows, and 5 more variables: logLik &lt;dbl&gt;, AIC &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   BIC &lt;dbl&gt;, deviance &lt;dbl&gt;, df.residual &lt;int&gt;</span></code></pre>
+<p>Los peores modelos parecen estar todos en África. Vamos a chequear ésto con un gráfico. Tenemos un número relativamente chico de observaciones y una variable discreta, así que <code>geom_jitter()</code> (TODO: en inglés jitter es temblar o algo similar, pero no sé si estaría bien poner acá eso porque no es exactamente eso…) es efectiva:</p>
+<pre class="sourceCode r"><code class="sourceCode r">glance <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(continente, r.squared)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.5</span>)</code></pre>
+<p><img src="model-many_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Podríamos quitar los países con un <span class="math inline">\(R^2\)</span> particularmente malo y graficar los datos:</p>
+<pre class="sourceCode r"><code class="sourceCode r">mal_ajuste &lt;-<span class="st"> </span><span class="kw">filter</span>(glance, r.squared <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.25</span>)
+
+paises <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">semi_join</span>(mal_ajuste, <span class="dt">by =</span> <span class="st">&quot;pais&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, esperanza_de_vida, <span class="dt">colour =</span> pais)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>()</code></pre>
+<p><img src="model-many_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Vemos dos efectos principales aquí: las tragedias de la epidemia de VIH/SIDA y el genocidio de Ruanda.</p>
+</div>
+<div id="ejercicios-6" class="section level3">
+<h3><span class="header-section-number">25.2.5</span> Ejercicios</h3>
+<ol style="list-style-type: decimal">
+<li><p>Una tendencia lineal parece ser demasiado simple para la tendencia general.
+¿Puedes hacerlo mejor con un polinomio cuadrático? ¿Cómo puedes interpretar
+el coeficiente del término cuadrático? (Pista: puedes querer transformar
+<code>year</code> para que tenga media cero.)</p></li>
+<li><p>Explora otros métodos para visualizar la distribución del <span class="math inline">\(R^2\)</span> por
+continente. Puedes querer probar el paquete <strong>ggbeeswarm</strong>, que provee
+métodos similares para evitar superposiciones como jitter, pero usa métodos
+determinísticos.</p></li>
+<li><p>Para crear el último gráfico (mostrando los datos para los países con los
+peores ajustes del modelo), precisamos dos pasos: creamos un <em>data frame</em> con
+una fila por país y después hicimos un <em>semi-join</em> (del inglés <em>semi juntar</em>) (TODO: deberíamos aclarar algo?) al conjunto de datos original.
+Es posible evitar este <em>join</em> si usamos <code>unnest()</code> en lugar de
+<code>unnest(.drop = TRUE)</code>. ¿Cómo?</p></li>
+</ol>
+</div>
+</div>
+<div id="columnas-lista-1" class="section level2">
+<h2><span class="header-section-number">25.3</span> Columnas-lista</h2>
+<p>Ahora que has visto un flujo de trabajo básico para manejar muchos modelos, vamos a sumergirnos en algunos detalles. En esta sección, exploraremos en más detalle la estructura de datos columna-lista. Solo recientemente es que he comenzado a apreciar realmente la idea de la columna-lista. Esta estructura está implícita en la definición de <em>data frame</em>: un <em>data frame</em> es una lista nombrada de vectores de igual largo. Una lista es un vector, así que siempre ha sido legítimo usar una lista como una columna de un <em>data frame</em>. Sin embargo, R base no hace las cosas fáciles para crear columnas-lista, y <code>data.frame()</code> trata a la lista como una lista de columnas:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>))
+<span class="co">#&gt;   x.1.3 x.3.5</span>
+<span class="co">#&gt; 1     1     3</span>
+<span class="co">#&gt; 2     2     4</span>
+<span class="co">#&gt; 3     3     5</span></code></pre>
+<p>Puedes prevenir que <code>data.frame()</code> haga esto con <code>I()</code>, pero el resultado no se imprime particularmente bien:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data.frame</span>(
+  <span class="dt">x =</span> <span class="kw">I</span>(<span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>)), 
+  <span class="dt">y =</span> <span class="kw">c</span>(<span class="st">&quot;1, 2&quot;</span>, <span class="st">&quot;3, 4, 5&quot;</span>)
+)
+<span class="co">#&gt;         x       y</span>
+<span class="co">#&gt; 1 1, 2, 3    1, 2</span>
+<span class="co">#&gt; 2 3, 4, 5 3, 4, 5</span></code></pre>
+<p><em>Tibble</em> mitiga este problema siendo más perezoso (TODO: lazier) (<code>tibble()</code> no modifica sus <em>inputs</em>) y proporcionando un mejor método de impresión:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(
+  <span class="dt">x =</span> <span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>), 
+  <span class="dt">y =</span> <span class="kw">c</span>(<span class="st">&quot;1, 2&quot;</span>, <span class="st">&quot;3, 4, 5&quot;</span>)
+)
+<span class="co">#&gt; # A tibble: 2 x 2</span>
+<span class="co">#&gt;   x         y      </span>
+<span class="co">#&gt;   &lt;list&gt;    &lt;chr&gt;  </span>
+<span class="co">#&gt; 1 &lt;int [3]&gt; 1, 2   </span>
+<span class="co">#&gt; 2 &lt;int [3]&gt; 3, 4, 5</span></code></pre>
+<p>Es incluso más fácil con <code>tribble()</code> ya que automáticamente puede interpretar que necesitas una lista:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tribble</span>(
+   <span class="op">~</span>x, <span class="op">~</span>y,
+  <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="st">&quot;1, 2&quot;</span>,
+  <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>, <span class="st">&quot;3, 4, 5&quot;</span>
+)
+<span class="co">#&gt; # A tibble: 2 x 2</span>
+<span class="co">#&gt;   x         y      </span>
+<span class="co">#&gt;   &lt;list&gt;    &lt;chr&gt;  </span>
+<span class="co">#&gt; 1 &lt;int [3]&gt; 1, 2   </span>
+<span class="co">#&gt; 2 &lt;int [3]&gt; 3, 4, 5</span></code></pre>
+<p>Columnas-lista son usualmente más útiles como estructuras de datos intermedias. Es difícil trabajar con ellas directamente, porque la mayoría de las funciones de R trabajan con vectores atómicos o <em>data frames</em>, pero la ventaja de mantener ítems relacionados juntos en un <em>data frame</em> hace que valga la pena un poco de molestia.</p>
+<p>Generalmente hay tres partes de un <em>pipeline</em> (del inglés <em>tubería</em>) efectivo de columnas-lista:</p>
+<ol style="list-style-type: decimal">
+<li><p>Creas la columna-lista usando uno entre <code>nest()</code>, <code>summarise()</code> + <code>list()</code>,
+o <code>mutate()</code> + una función map, como se describió en <a href="muchos-modelos.html#creando-columnas-lista">Creando columnas-lista</a>.</p></li>
+<li><p>Creas otra columna-lista intermedia transformando columnas lista
+existentes con <code>map()</code>, <code>map2()</code> o <code>pmap()</code>. Por ejemplo,
+en el caso de estudio de arriba, creamos una columna-lista de modelos transformando
+una columna-lista de <em>data frames</em>.</p></li>
+<li><p>Simplificas la columna-lista de vuelta en un <em>data frame</em> o vector atómico,
+como se describió en <a href="muchos-modelos.html#simplificando-columnas-lista">Simplificando columnas-lista</a>.</p></li>
+</ol>
+</div>
+<div id="creando-columnas-lista" class="section level2">
+<h2><span class="header-section-number">25.4</span> Creando columnas-lista</h2>
+<p>Típicamente, no crearás columnas-lista con <code>tibble()</code>. En cambio, las crearás a partir de columnas regulares, usando uno de tres métodos:</p>
+<ol style="list-style-type: decimal">
+<li><p>Con <code>tidyr::nest()</code> para convertir un <em>data frame</em> agrupado en uno anidado
+donde tengas columnas-lista de <em>data frames</em>.</p></li>
+<li><p>Con <code>mutate()</code> y funciones vectorizadas que retornan una lista.</p></li>
+<li><p>Con <code>summarise()</code> y funciones de resumen que retornan múltiples resultados.</p></li>
+</ol>
+<p>Alternativamente, podrías crearlas a partir de una lista nombrada, usando <code>tibble::enframe()</code>.</p>
+<p>Generalmente, cuando creas columnas-lista, debes asegurarte de que sean homogéneas: cada elemento debe contener el mismo tipo de cosa. No hay chequeos para asegurarte de que sea así, pero si usas <strong>purrr</strong> y recuerdas lo que aprendiste sobre funciones de tipo estable (TODO: type-stable functions), encontrarás que eso pasa naturalmente.</p>
+<div id="con-anidacion" class="section level3">
+<h3><span class="header-section-number">25.4.1</span> Con anidación</h3>
+<p><code>nest()</code> crea un <em>data frame</em> anidado, que es un <em>data frame</em> con una columna-lista de <em>data frames</em>. En un <em>data frame</em> anidado cada fila es una meta-observación: las otras columnas son variables que definen la observación (como país y continente arriba), y la columna-lista de <em>data frames</em> tiene las observaciones individuales que construyen la meta-observación.</p>
+<p>Hay dos formas de usar <code>nest()</code>. Hasta ahora has visto cómo usarlo con un <em>data frame</em> agrupado. Cuando se aplica a un <em>data frame</em> agrupado, <code>nest()</code> mantiene las columnas que agrupan tal cual, y envuelve todo lo demás en la columna-lista:</p>
+<pre class="sourceCode r"><code class="sourceCode r">paises <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(pais, continente) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">nest</span>()
+<span class="co">#&gt; # A tibble: 142 x 3</span>
+<span class="co">#&gt;   pais       continente data             </span>
+<span class="co">#&gt;   &lt;fct&gt;      &lt;fct&gt;      &lt;list&gt;           </span>
+<span class="co">#&gt; 1 Afganistán Asia       &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 2 Albania    Europa     &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 3 Argelia    África     &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 4 Angola     África     &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 5 Argentina  Américas   &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 6 Australia  Oceanía    &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; # ... with 136 more rows</span></code></pre>
+<p>También lo puedes usar en un <em>data frame</em> no agrupado, especificando cuáles columnas quieres anidar:</p>
+<pre class="sourceCode r"><code class="sourceCode r">paises <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">nest</span>(anio<span class="op">:</span>pib_per_capita)
+<span class="co">#&gt; # A tibble: 142 x 3</span>
+<span class="co">#&gt;   pais       continente data             </span>
+<span class="co">#&gt;   &lt;fct&gt;      &lt;fct&gt;      &lt;list&gt;           </span>
+<span class="co">#&gt; 1 Afganistán Asia       &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 2 Albania    Europa     &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 3 Argelia    África     &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 4 Angola     África     &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 5 Argentina  Américas   &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; 6 Australia  Oceanía    &lt;tibble [12 × 4]&gt;</span>
+<span class="co">#&gt; # ... with 136 more rows</span></code></pre>
+</div>
+<div id="a-partir-de-funciones-vectorizadas" class="section level3">
+<h3><span class="header-section-number">25.4.2</span> A partir de funciones vectorizadas</h3>
+<p>Algunas funciones útiles toman un vector atómico y retornan una lista. Por ejemplo, en <a href="strings.html#strings">strings</a> (TODO: chequear cómo se llama el capítulo en español) aprendiste <code>stringr::str_split()</code> que toma un vector de caracteres y retorna una lista de vectores de caracteres. Si lo usas dentro de mutate (TODO: no sé si ponerlo en cursiva o dejarlo como el original), obtendrás una columna-lista:</p>
+<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span>x1,
+  <span class="st">&quot;a,b,c&quot;</span>, 
+  <span class="st">&quot;d,e,f,g&quot;</span>
+) 
+
+df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">x2 =</span> stringr<span class="op">::</span><span class="kw">str_split</span>(x1, <span class="st">&quot;,&quot;</span>))
+<span class="co">#&gt; # A tibble: 2 x 2</span>
+<span class="co">#&gt;   x1      x2       </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;list&gt;   </span>
+<span class="co">#&gt; 1 a,b,c   &lt;chr [3]&gt;</span>
+<span class="co">#&gt; 2 d,e,f,g &lt;chr [4]&gt;</span></code></pre>
+<p><code>unnest()</code> sabe cómo manejar estas listas de vectores:</p>
+<pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">x2 =</span> stringr<span class="op">::</span><span class="kw">str_split</span>(x1, <span class="st">&quot;,&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">unnest</span>()
+<span class="co">#&gt; # A tibble: 7 x 2</span>
+<span class="co">#&gt;   x1      x2   </span>
+<span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;</span>
+<span class="co">#&gt; 1 a,b,c   a    </span>
+<span class="co">#&gt; 2 a,b,c   b    </span>
+<span class="co">#&gt; 3 a,b,c   c    </span>
+<span class="co">#&gt; 4 d,e,f,g d    </span>
+<span class="co">#&gt; 5 d,e,f,g e    </span>
+<span class="co">#&gt; 6 d,e,f,g f    </span>
+<span class="co">#&gt; # ... with 1 more row</span></code></pre>
+<p>(Si usas mucho este patrón, asegúrate de chequear <code>tidyr::separate_rows()</code> (del inglés <em>separar filas</em>) que es un <em>wrapper</em> (TODO: cuando esté el capítulo de Joshua poner explicación) alrededor de este patrón común).</p>
+<p>Otro ejemplo de este patrón es usar <code>map()</code>, <code>map2()</code>, <code>pmap()</code> de <strong>purrr</strong>. Por ejemplo, podríamos tomar el ejemplo final de <a href="iteration.html#invoking-different-functions">Invoking different functions</a> (TODO: chequear nombre en español) y reescribirlo usando <code>mutate()</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r">sim &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span>f,      <span class="op">~</span>params,
+  <span class="st">&quot;runif&quot;</span>, <span class="kw">list</span>(<span class="dt">min =</span> <span class="dv">-1</span>, <span class="dt">max =</span> <span class="dv">1</span>),
+  <span class="st">&quot;rnorm&quot;</span>, <span class="kw">list</span>(<span class="dt">sd =</span> <span class="dv">5</span>),
+  <span class="st">&quot;rpois&quot;</span>, <span class="kw">list</span>(<span class="dt">lambda =</span> <span class="dv">10</span>)
+)
+
+sim <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sims =</span> <span class="kw">invoke_map</span>(f, params, <span class="dt">n =</span> <span class="dv">10</span>))
+<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt;   f     params     sims      </span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;list&gt;     &lt;list&gt;    </span>
+<span class="co">#&gt; 1 runif &lt;list [2]&gt; &lt;dbl [10]&gt;</span>
+<span class="co">#&gt; 2 rnorm &lt;list [1]&gt; &lt;dbl [10]&gt;</span>
+<span class="co">#&gt; 3 rpois &lt;list [1]&gt; &lt;int [10]&gt;</span></code></pre>
+<p>Nota que técnicamente <code>sim</code> no es homogénea porque contiene vectores con tipo de datos dobles así como enteros (TODO: both double and integer vectors). Sin embargo, es probable que ésto no cause muchos problemas porque ambos vectores son numéricos.</p>
+</div>
+<div id="a-partir-de-medidas-de-resumen-con-mas-de-un-valor" class="section level3">
+<h3><span class="header-section-number">25.4.3</span> A partir de medidas de resumen con más de un valor</h3>
+<p>Una restricción de <code>summarise()</code> es que solo funciona con funciones de resumen que retornan un único valor. Eso significa que no puedes usarlo con funciones como <code>quantile()</code> que retorna un vector de largo arbitrario:</p>
+<pre class="sourceCode r"><code class="sourceCode r">mtautos <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(cilindros) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">q =</span> <span class="kw">quantile</span>(millas))
+<span class="co">#&gt; Error in summarise_impl(.data, dots): Column `q` must be length 1 (a summary value), not 5</span></code></pre>
+<p>Sin embargo, puedes envolver el resultado en una lista! Esto obedece el contrato de <code>summarise()</code>, porque cada resumen ahora es una lista (un vector) de largo 1.</p>
+<pre class="sourceCode r"><code class="sourceCode r">mtautos <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(cilindros) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">q =</span> <span class="kw">list</span>(<span class="kw">quantile</span>(millas)))
+<span class="co">#&gt; # A tibble: 3 x 2</span>
+<span class="co">#&gt;   cilindros q        </span>
+<span class="co">#&gt;       &lt;dbl&gt; &lt;list&gt;   </span>
+<span class="co">#&gt; 1         4 &lt;dbl [5]&gt;</span>
+<span class="co">#&gt; 2         6 &lt;dbl [5]&gt;</span>
+<span class="co">#&gt; 3         8 &lt;dbl [5]&gt;</span></code></pre>
+<p>Para producir resultados útiles con unnest, también necesitarás capturar las probabilidades:</p>
+<pre class="sourceCode r"><code class="sourceCode r">probs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.01</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.99</span>)
+mtautos <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(cilindros) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">p =</span> <span class="kw">list</span>(probs), <span class="dt">q =</span> <span class="kw">list</span>(<span class="kw">quantile</span>(millas, probs))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">unnest</span>()
+<span class="co">#&gt; # A tibble: 15 x 3</span>
+<span class="co">#&gt;   cilindros     p     q</span>
+<span class="co">#&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1         4  0.01  21.4</span>
+<span class="co">#&gt; 2         4  0.25  22.8</span>
+<span class="co">#&gt; 3         4  0.5   26  </span>
+<span class="co">#&gt; 4         4  0.75  30.4</span>
+<span class="co">#&gt; 5         4  0.99  33.8</span>
+<span class="co">#&gt; 6         6  0.01  17.8</span>
+<span class="co">#&gt; # ... with 9 more rows</span></code></pre>
+</div>
+<div id="a-partir-de-una-lista-nombrada" class="section level3">
+<h3><span class="header-section-number">25.4.4</span> A partir de una lista nombrada</h3>
+<p><em>Data frames</em> con columnas-lista proveen una solución a un problema común: ¿qué haces si quieres iterar sobre el contenido de una lista y también sobre sus elementos? En lugar de tratar de juntar todo en un único objeto, usualmente es más fácil hacer un <em>data frame</em>: una columna puede contener los elementos y otra columna la lista. Una forma fácil de crear un <em>data frame</em> como éste desde una lista es <code>tibble::enframe()</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(
+  <span class="dt">a =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,
+  <span class="dt">b =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">4</span>, 
+  <span class="dt">c =</span> <span class="dv">5</span><span class="op">:</span><span class="dv">6</span>
+) 
+
+df &lt;-<span class="st"> </span><span class="kw">enframe</span>(x)
+df
+<span class="co">#&gt; # A tibble: 3 x 2</span>
+<span class="co">#&gt;   name  value    </span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;list&gt;   </span>
+<span class="co">#&gt; 1 a     &lt;int [5]&gt;</span>
+<span class="co">#&gt; 2 b     &lt;int [2]&gt;</span>
+<span class="co">#&gt; 3 c     &lt;int [2]&gt;</span></code></pre>
+<p>La ventaja de esta estructura es que se generaliza de una forma relativamente sencilla - los nombres son útiles si tienes como metadata vectores de caracteres, pero no ayudan para otros tipos de datos o para múltiples vectores.</p>
+<p>Ahora, si quieres iterar sobre los nombres y valores en paralelo, puedes usar <code>map2()</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">smry =</span> <span class="kw">map2_chr</span>(name, value, <span class="op">~</span><span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_c</span>(.x, <span class="st">&quot;: &quot;</span>, .y[<span class="dv">1</span>]))
+  )
+<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt;   name  value     smry </span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;list&gt;    &lt;chr&gt;</span>
+<span class="co">#&gt; 1 a     &lt;int [5]&gt; a: 1 </span>
+<span class="co">#&gt; 2 b     &lt;int [2]&gt; b: 3 </span>
+<span class="co">#&gt; 3 c     &lt;int [2]&gt; c: 5</span></code></pre>
+</div>
+<div id="ejercicios-7" class="section level3">
+<h3><span class="header-section-number">25.4.5</span> Ejercicios</h3>
+<ol style="list-style-type: decimal">
+<li><p>Lista todas las funciones en las que puedas pensar que tomen como <em>input</em> un vector atómico y
+retornen una lista.</p></li>
+<li><p>Piensa en funciones de resumen útiles que, como <code>quantile()</code>, retornen
+múltiples valores.</p></li>
+<li><p>¿Qué es lo que falta en el siguiente <em>data frame</em>? ¿Cómo <code>quantile()</code> retorna
+eso que falta? ¿Por qué eso no es tan útil aquí?</p></li>
+</ol>
+<pre class="sourceCode r"><code class="sourceCode r">mtautos <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(cilindros) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">q =</span> <span class="kw">list</span>(<span class="kw">quantile</span>(millas))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">unnest</span>()
+<span class="co">#&gt; # A tibble: 15 x 2</span>
+<span class="co">#&gt;   cilindros     q</span>
+<span class="co">#&gt;       &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1         4  21.4</span>
+<span class="co">#&gt; 2         4  22.8</span>
+<span class="co">#&gt; 3         4  26  </span>
+<span class="co">#&gt; 4         4  30.4</span>
+<span class="co">#&gt; 5         4  33.9</span>
+<span class="co">#&gt; 6         6  17.8</span>
+<span class="co">#&gt; # ... with 9 more rows</span></code></pre>
+<ol style="list-style-type: decimal">
+<li>¿Qué hace este código? ¿Por qué podría ser útil?</li>
+</ol>
+<pre class="sourceCode r"><code class="sourceCode r">mtautos <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(cilindros) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise_each</span>(<span class="kw">funs</span>(list))</code></pre>
+</div>
+</div>
+<div id="simplificando-columnas-lista" class="section level2">
+<h2><span class="header-section-number">25.5</span> Simplificando columnas-lista</h2>
+<p>Para aplicar las técnicas de manipulación de datos y visualización que has aprendido en este libro, necesitarás simplificar la columna-lista de vuelta a una columna regular (un vector atómico), o conjunto de columnas. La técnica que usarás para volver a una estructura más sencilla depende de si quieres un único valor por elemento, o múltiples valores.</p>
+<ol style="list-style-type: decimal">
+<li><p>Si quieres un único valor, usa <code>mutate()</code> con <code>map_lgl()</code>,
+<code>map_int()</code>, <code>map_dbl()</code>, y <code>map_chr()</code> para crear un vector atómico.</p></li>
+<li><p>Si quieres varios valores, usa <code>unnest()</code> para convertir columnas-lista de vuelta a
+columnas regulares, repitiendo las filas tantas veces como sea necesario.</p></li>
+</ol>
+<p>Estas técnicas están descritas con más detalle abajo.</p>
+<div id="lista-a-vector" class="section level3">
+<h3><span class="header-section-number">25.5.1</span> Lista a vector</h3>
+<p>Si puedes reducir tu columna lista a un vector atómico entonces será una columna regular. Por ejemplo, siempre puedes resumir un objeto con su tipo y largo, por lo que este código funcionará sin importar cuál tipo de columna-lista tengas:</p>
+<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span>x,
+  letters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>],
+  <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,
+  <span class="kw">runif</span>(<span class="dv">5</span>)
+)
+  
+df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(
+  <span class="dt">tipo =</span> <span class="kw">map_chr</span>(x, typeof),
+  <span class="dt">largo =</span> <span class="kw">map_int</span>(x, length)
+)
+<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt;   x         tipo      largo</span>
+<span class="co">#&gt;   &lt;list&gt;    &lt;chr&gt;     &lt;int&gt;</span>
+<span class="co">#&gt; 1 &lt;chr [5]&gt; character     5</span>
+<span class="co">#&gt; 2 &lt;int [3]&gt; integer       3</span>
+<span class="co">#&gt; 3 &lt;dbl [5]&gt; double        5</span></code></pre>
+<p>Ésta es la misma información básica que obtienes del método por defecto de imprimir <em>tbl</em> (TODO: esto se traduce?), pero ahora lo puedes usar para filtrar. Es una técnica útil si tienes listas heterogéneas, y quieres remover las partes que no te sirven.</p>
+<p>No te olvides de los atajos de <code>map_*()</code> - puedes usar <code>map_chr(x, &quot;manzana&quot;)</code> para extraer la cadena de caracteres almacenada en <code>manzana</code> para cada elemento de <code>x</code>. Ésto es útil para separar listas anidadas en columnas regulares. Usa el argumento <code>.null</code> para proveer un valor para usar si el elemento es un valor perdido (<em>missing</em>) (TODO: traducimos missing?) (en lugar de retornar <code>NULL</code>):</p>
+<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span>x,
+  <span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>),
+  <span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">2</span>, <span class="dt">c =</span> <span class="dv">4</span>)
+)
+df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(
+  <span class="dt">a =</span> <span class="kw">map_dbl</span>(x, <span class="st">&quot;a&quot;</span>),
+  <span class="dt">b =</span> <span class="kw">map_dbl</span>(x, <span class="st">&quot;b&quot;</span>, <span class="dt">.null =</span> <span class="ot">NA_real_</span>)
+)
+<span class="co">#&gt; # A tibble: 2 x 3</span>
+<span class="co">#&gt;   x              a     b</span>
+<span class="co">#&gt;   &lt;list&gt;     &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 &lt;list [2]&gt;     1     2</span>
+<span class="co">#&gt; 2 &lt;list [2]&gt;     2    NA</span></code></pre>
+</div>
+<div id="desanidando-1" class="section level3">
+<h3><span class="header-section-number">25.5.2</span> Desanidando</h3>
+<p><code>unnest()</code> trabaja repitiendo la columna regular una vez para cada elemento de la columna-lista. Por ejemplo, en el siguiente ejemplo sencillo repetimos la primera fila 4 veces (porque el primer elemento de <code>y</code> tiene largo cuatro), y la segunda fila una vez:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">y =</span> <span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(y)
+<span class="co">#&gt; # A tibble: 5 x 2</span>
+<span class="co">#&gt;       x     y</span>
+<span class="co">#&gt;   &lt;int&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1     1     1</span>
+<span class="co">#&gt; 2     1     2</span>
+<span class="co">#&gt; 3     1     3</span>
+<span class="co">#&gt; 4     1     4</span>
+<span class="co">#&gt; 5     2     1</span></code></pre>
+<p>Esto significa que no puedes simultáneamente desanidar dos columnas que contengan un número diferente de elementos:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Funciona, porque y y z tienen el mismo número de elementos en</span>
+<span class="co"># cada fila</span>
+df1 &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span>x, <span class="op">~</span>y,           <span class="op">~</span>z,
+   <span class="dv">1</span>, <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,
+   <span class="dv">2</span>, <span class="st">&quot;c&quot;</span>,           <span class="dv">3</span>
+)
+df1
+<span class="co">#&gt; # A tibble: 2 x 3</span>
+<span class="co">#&gt;       x y         z        </span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;    &lt;list&gt;   </span>
+<span class="co">#&gt; 1     1 &lt;chr [2]&gt; &lt;int [2]&gt;</span>
+<span class="co">#&gt; 2     2 &lt;chr [1]&gt; &lt;dbl [1]&gt;</span>
+df1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(y, z)
+<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt;       x y         z</span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1     1 a         1</span>
+<span class="co">#&gt; 2     1 b         2</span>
+<span class="co">#&gt; 3     2 c         3</span>
+
+<span class="co"># No funciona porque y y z tienen un número diferente de elementos</span>
+df2 &lt;-<span class="st"> </span><span class="kw">tribble</span>(
+  <span class="op">~</span>x, <span class="op">~</span>y,           <span class="op">~</span>z,
+   <span class="dv">1</span>, <span class="st">&quot;a&quot;</span>,         <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,  
+   <span class="dv">2</span>, <span class="kw">c</span>(<span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>),   <span class="dv">3</span>
+)
+df2
+<span class="co">#&gt; # A tibble: 2 x 3</span>
+<span class="co">#&gt;       x y         z        </span>
+<span class="co">#&gt;   &lt;dbl&gt; &lt;list&gt;    &lt;list&gt;   </span>
+<span class="co">#&gt; 1     1 &lt;chr [1]&gt; &lt;int [2]&gt;</span>
+<span class="co">#&gt; 2     2 &lt;chr [2]&gt; &lt;dbl [1]&gt;</span>
+df2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(y, z)
+<span class="co">#&gt; Error: All nested columns must have the same number of elements.</span></code></pre>
+<p>El mismo principio aplica al desanidar columnas-lista de <em>data frames</em>. Puedes desanidar múltiples columnas-lista siempre que todos los <em>data frames</em> de cada fila tengan la misma cantidad de filas.</p>
+</div>
+<div id="ejercicios-8" class="section level3">
+<h3><span class="header-section-number">25.5.3</span> Ejercicios</h3>
+<ol style="list-style-type: decimal">
+<li><p>¿Por qué podría ser útil la función <code>lengths()</code> para crear columnas de
+vectores atómicos a partir de columnas-lista?</p></li>
+<li><p>Lista los tipos de vectores más comúnes que se encuentran en un <em>data frame</em>. ¿Qué hace que las
+listas sean diferentes?</p></li>
+</ol>
+</div>
+</div>
+<div id="haciendo-datos-ordenados-con-broom" class="section level2">
+<h2><span class="header-section-number">25.6</span> Haciendo datos ordenados con broom</h2>
+<p>El paquete <strong>broom</strong> provee tres herramientas generales para transformar modelos en en <em>data frames</em> ordenados:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>broom::glance(modelo)</code> retorna una fila para cada modelo. Cada columna tiene una
+medida de resumen del modelo: o bien una medida de la calidad del modelo, o complejidad, o
+una combinación de ambos.</p></li>
+<li><p><code>broom::tidy(modelo)</code> retorna una fila por cada coeficiente en el modelo. Cada
+columna brinda información acerca de la estimación o su variabilidad.</p></li>
+<li><p><code>broom::augment(modelo, datos)</code> retorna una fila por cada fila en <code>datos</code>, agregando
+valores adicionales como residuos, y estadísticos de influencia.</p></li>
+</ol>
+
+<p>Comunicando
+Introducción
+Hasta aquí, hemos aprendido a usar las herramientas para importar tus datos en R, ordenarlos de una manera conveniente para el análisis, y luego interpretarlos a través de su transformación, visualización y modelado. Sin embargo, no importa lo bien que esté hecho tu análisis si no puedes explicarlo de manera sencilla a otros: es decir, que es necesario comunicar tus resultados.</p>
+<p>La comunicación de resultados es el tema de los siguientes cuatro capítulos.</p>
+<ul>
+<li><p>En [el capítulo: R Markdown], aprenderás sobre dicho paquete, el cual es una herramienta para integrar texto, código y resultados. Puedes usarlo en modo notebook, es decir, en un entorno interactivo de ejecución de código para la comunicación de analista-a-analista, y en modo reporte para la comunicación de analista-a-tomadores-de-decisión. Gracias al potencial de los formatos de R Markdown, incluso puedes usar el mismo documento para ambos propósitos.</p></li>
+<li><p>En [el capítulo: Gráficos para la comunicación], aprenderás cómo convertir tus gráficos exploratorios en gráficos explicativos,
+los cuales ayudarán a quien ve tu análisis por primera vez a comprender de qué se trata de manera fácil y sencilla.</p></li>
+<li><p>En [el capítulo: Formatos de R Markdown], aprenderás un poco sobre la gran variedad de salidas que puedes generar usando la librería R Markdown, incluyendo dashboards (tableros de control), sitios web, y libros.</p></li>
+<li><p>Terminaremos con [el flujo de trabajo de R Markdown], donde aprenderás sobre “analysis notebook”, en otras palabras, aprenderás sobre el modo notebook para realizar el análisis y registrar sistemáticamente tus logros y fallas para que puedas aprender de ellos.</p></li>
+</ul>
+<p>Desafortunadamente, estos capítulos se enfocan principalmente en la parte técnica de la comunicación, y no en los verdaderos grandes problemas de comunicar tus pensamientos a otras personas. Sin embargo, existe una gran cantidad de excelentes libros que abordan esta problemática, cuyas referencias estarán disponibles al final de cada capítulo.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="model-building.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-markdown.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/hadley/r4ds/edit/master/model-many.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
