@@ -40,7 +40,7 @@ And you can print this out in R code by running `getwd()`:
 
 ```{r eval = FALSE}
 getwd()
-#> [1] "/Users/hadley/Documents/r4ds/r4ds"
+# > [1] "/Users/hadley/Documents/r4ds/r4ds"
 ```
 
 As a beginning R user, it's OK to let your home directory, documents directory, or any other weird directory on your computer be R's working directory. But you're six chapters into this book, and you're no longer a rank beginner. Very soon now you should evolve to organising your analytical projects into directories and, when working on a project, setting R's working directory to the associated directory.
@@ -95,7 +95,7 @@ Once this process is complete, you'll get a new RStudio project just for this bo
 
 ```{r eval = FALSE}
 getwd()
-#> [1] /Users/hadley/Documents/r4ds/r4ds
+# > [1] /Users/hadley/Documents/r4ds/r4ds
 ```
 
 Whenever you refer to a file with a relative path it will look for it here. 
@@ -105,7 +105,7 @@ Now enter the following commands in the script editor, and save the file, callin
 ```{r toy-line, eval = FALSE}
 library(tidyverse)
 
-ggplot(diamonds, aes(carat, price)) + 
+ggplot(diamonds, aes(carat, price)) +
   geom_hex()
 ggsave("diamonds.pdf")
 

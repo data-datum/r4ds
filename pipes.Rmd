@@ -59,9 +59,9 @@ Cada vez que escribo código como este, invariablemente uso el número incorrect
 Probablemente te preocupes que esta forma cree muchas copias de tus datos y ocupe demasiada memoria. Sorprendentemente, este no es el caso. Primero, ten en cuenta que preocuparse proactivamente acerca de la memoria no es una manera útil de invertir tu tiempo: preocupate acerca de ello cuando se convierta en un problema (ej. cuando te quedes sin memoria), no antes. En segundo lugar, R no es estúpido, compartirá las columnas a lo largo de los marcos de datos, cuando sea posible. Veamos a una tubería de manipulación de datos cuando agregamos un nueva columna al `ggplot2::diamantes`:
 
 ```{r}
-diamantes <- ggplot2::diamantes
-diamantes2 <- diamantes %>% 
-  dplyr::mutar(precio_por_quilate = precio / quilate)
+data(diamantes)
+diamantes2 <- diamantes %>%
+  dplyr::mutate(precio_por_quilate = precio / quilate)
 
 pryr::tamaño_objeto(diamantes)
 pryr::tamaño_objeto(diamantes2)
@@ -106,12 +106,21 @@ Esto es menos tipeo (y menos pensamiento), así que es menos probable que cometa
 Otro enfoque es abandonar la asignación y encadenar las llamadas a las funciones juntas:
 
 ```{r, eval = FALSE}
+COMENTARIO PACHA: DEJAMOS ESTO
 saltar(
   recoger(
     golpear(foo_foo, por_el = bosque),
     arriba = en_la_cabeza
   ), 
   en = la_cabeza
+
+O ESTO
+bop(
+  scoop(
+    hop(foo_foo, through = forest),
+    up = field_mice
+  ),
+  on = head
 )
 ```
 
@@ -147,20 +156,20 @@ Esto significa que un pipe no trabajara para dos clases de funciones:
 1. Funciones que usan el entorno actual. Por ejemplo, `asignar()`creará una nueva variable con el nombre dado en el entorno actual:
      
     ```{r}
-    asignar("x", 10)
-    x
-    
-    "x" %>% asignar(100)
-    x
+assign("x", 10)
+x
+
+"x" %>% assign(100)
+x
     ```
     
     
     El uso de la asignación con el pipe no funciona porque lo asigna a un entorno temporario usado por `%>%`. Si quieres usar la asignación con pipe, debes explicitar el entorno:
     
     ```{r}
-    env <- entorno()
-    "x" %>% assignar(100, envir = env)
-    x
+env <- environment()
+"x" %>% assign(100, envir = env)
+x
     ```
     
     Otras funciones con este problema incluyen  `get()` y `load()`.
@@ -169,10 +178,10 @@ Esto significa que un pipe no trabajara para dos clases de funciones:
     Un lugar para este problema es `tryCatch()`, que te permite capturar y manejar errores:
     
     ```{r, error = TRUE}
-    tryCatch(stop("!"), error = function(e) "Un error")
-    
-    stop("!") %>% 
-      tryCatch(error = function(e) "Un error")
+tryCatch(stop("!"), error = function(e) "An error")
+
+stop("!") %>%
+  tryCatch(error = function(e) "An error")
     ```
     
     Hay una relativa gran cantidad de funciones con este comportamiento, incluyendo a `try()`, `suppressMessages()`, y `suppressWarnings()` en R base. 
@@ -196,36 +205,37 @@ Todos los paquetes en tidyverse automaticamente harán  `%>%` disponible para t�
 Para trabajar en torno a este problema, puedes usar el pipe "T". `%T>%`trabaja igual que `%>%` excepto que este devuelve el lado izquierdo en vez del lado derecho. Se lo llama "T" porque literalmente tiene la forma de una T.
   
     ```{r}
-    rnorm(100) %>%
-      matrix(ncol = 2) %>%
-      plot() %>%
-      str()
-    
-    rnorm(100) %>%
-      matrix(ncol = 2) %T>%
-      plot() %>%
-      str()
+rnorm(100) %>%
+  matrix(ncol = 2) %>%
+  plot() %>%
+  str()
+
+rnorm(100) %>%
+  matrix(ncol = 2) %T>%
+  plot() %>%
+  str()
     ```
 
 *   Si estas trabajando con funciones que no están basados en una API (ej., tu pasas vectores individuales, no un dataframe o expresiones a ser evaluadas en el contexto de un dataframe), pueden encontrar `%$%` útil. El operador explota las variables en un dataframe así que te puedes referir a ellos explícitamente. Esto es útil cuando se trabaja con muchas funciones en R base:
 
     
     ```{r}
+    data(mtautos)
     mtautos %$%
       cor(disp, mpg)
     ```
 
-*   Para asignaciones magrittr provee el operador `%<>%`e te permite reemplazar el código como: 
+*   Para asignaciones magrittr provee el operador `%<>%` te permite reemplazar el código como: 
   
     ```{r, eval = FALSE}
-    mtautos <- mtautos %>% 
-      transformar(cyl = cyl * 2)
+mtautos <- mtautos %>%
+  transform(cilindros = cilindros * 2)
     ```
     
     con
      
     ```{r, eval = FALSE}
-    mtautos %<>% transformar(cyl = cyl * 2)
+mtautos %<>% transform(cilindros = cilindros * 2)
     ```
 
     No soy partidario de este operador porque pienso que una asignación es una operación especial que siempre debe ser clara cuando sucede. 
