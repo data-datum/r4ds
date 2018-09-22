@@ -41,7 +41,7 @@ df$d <- (df$d - min(df$d, na.rm = TRUE)) /
   (max(df$d, na.rm = TRUE) - min(df$d, na.rm = TRUE))
 ```
 
-You might be able to puzzle out that this rescales each column to have a range from 0 to 1. But did you spot the mistake? I made an error when copying-and-pasting the code for `df$b`: I forgot to change an `a` to a `b`. Extracting repeated code out into a function is a good idea because it prevents you from making this type of mistake.
+Es posible que puedas descifrar que esto reescala cada columna para tener un rango de 0 a 1. ¿Pero has visto el error? He cometido un error copiando-y-pegando el código para `df$b`: He olvidado de cambiar `a` a `b`. Extraer código repetido en una función es una buena idea porque te previene de cometer errores como este:
 
 Para escribir una función primero necesitas analizar el código. Cuantos inputs tiene?
 
