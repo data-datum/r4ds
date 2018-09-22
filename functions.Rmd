@@ -1,29 +1,27 @@
-# Functions
+# Funciones
 
-## Introduction 
+## Introducción
 
-One of the best ways to improve your reach as a data scientist is to write functions. Functions allow you to automate common tasks in a more powerful and general way than copy-and-pasting. Writing a function has three big advantages over using copy-and-paste:
+Una de las mejores maneras de lograr tener mayor alcance como científica de datos es escribir funciones. Las funciones te permitirán automatizar algunas tareas comunes en una manera poderosa y general que copiar-y-pegar. Escribir funciones tiene 3 grandes ventajas sobre copiar-y-pegar:
 
-1.  You can give a function an evocative name that makes your code easier to 
-    understand.
+1. Puedes dar a la función un nombre evocativo que hace to código más fácil de entender. 
 
-1.  As requirements change, you only need to update code in one place, instead
-    of many.
+2. Como cambien los requerimientos, tu solo necesitas cambiar tu código en un solo lugar, en vez de varios lugares. 
 
-1.  You eliminate the chance of making incidental mistakes when you copy and 
-    paste (i.e. updating a variable name in one place, but not in another).
+3. Tu eliminas las chances de hacer errores accidentales cuando copias y pegas (ej. actualizar el nombre de una variable en un lugar, pero no en otro).
 
-Writing good functions is a lifetime journey. Even after using R for many years I still learn new techniques and better ways of approaching old problems. The goal of this chapter is not to teach you every esoteric detail of functions but to get you started with some pragmatic advice that you can apply immediately.
+Escribir funciones en un viaje de toda la vida. Incluso después de usar R por varios años yo aún aprendo nuevas técnicas y mejores formas de abordar viejos problemas. El objetivo de este capítulo no es enseñarte cada detalle esotérico de funciones pero sí introducirte con consejos pragmáticos que puedes aplicar inmediatamente. 
 
-As well as practical advice for writing functions, this chapter also gives you some suggestions for how to style your code. Good code style is like correct punctuation. Youcanmanagewithoutit, but it sure makes things easier to read! As with styles of punctuation, there are many possible variations. Here we present the style we use in our code, but the most important thing is to be consistent.
+Como así también en los avisos práctivos para escribir funciones, en este capítulo también te da consejos para cómo diseñar tu código. El buen diseño del código es la correcta puntuación. Tu puedes hacerlo sin eso, pero te hará las cosas más fácil de leer! Al igual que los estilos de puntuación, hay muchas posibles variaciones. Aquí presentamos el diseño que usamos en nuestro código, pero lo más importante es ser consistente. 
 
-### Prerequisites
+### Prerequisitos
 
-The focus of this chapter is on writing functions in base R, so you won't need any extra packages.
+El objetivo de este capítulo es escribir funciones en R base, así no 
+necesitarás paquetes extra. 
 
-## When should you write a function?
+## ¿Cuándo deberías escribir una función?
 
-You should consider writing a function whenever you've copied and pasted a block of code more than twice (i.e. you now have three copies of the same code). For example, take a look at this code. What does it do?
+Debes considerar escribir una función cuando has copiado y pegado un bloque de código más de dos veces (ej. ahora tienes tres copias del mismo código). Por ejemplo, mira a este código. Qué es lo que realiza?
 
 ```{r}
 df <- tibble::tibble(
@@ -45,28 +43,29 @@ df$d <- (df$d - min(df$d, na.rm = TRUE)) /
 
 You might be able to puzzle out that this rescales each column to have a range from 0 to 1. But did you spot the mistake? I made an error when copying-and-pasting the code for `df$b`: I forgot to change an `a` to a `b`. Extracting repeated code out into a function is a good idea because it prevents you from making this type of mistake.
 
-To write a function you need to first analyse the code. How many inputs does it have?
+Para escribir una función primero necesitas analizar el código. Cuantos inputs tiene?
+
 
 ```{r, eval = FALSE}
 (df$a - min(df$a, na.rm = TRUE)) /
   (max(df$a, na.rm = TRUE) - min(df$a, na.rm = TRUE))
 ```
 
-This code only has one input: `df$a`. (If you're surprised that `TRUE` is not an input, you can explore why in the exercise below.) To make the inputs more clear, it's a good idea to rewrite the code using temporary variables with general names. Here this code only requires a single numeric vector, so I'll call it `x`:
+Este código tiene un solo input `df$a`. (Si te sorprende que `TRUE` no es un input, puedes explorar el ejercicio de abajo). Para hacer los inputs mas claros, es buena idea reescribir el código usando variables temporadles con nombres generales. Aca el código solamente requiere un solo vector numérico, por lo que lo llamaré `x`:
 
 ```{r}
 x <- df$a
 (x - min(x, na.rm = TRUE)) / (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
 ```
 
-There is some duplication in this code. We're computing the range of the data three times, so it makes sense to do it in one step:
+Hay algo de duplicación en este código. Estamos computando el rango de datos tres veces, así que tiene razón hacerlo en un solo paso:
 
 ```{r}
 rng <- range(x, na.rm = TRUE)
 (x - rng[1]) / (rng[2] - rng[1])
 ```
 
-Pulling out intermediate calculations into named variables is a good practice because it makes it more clear what the code is doing. Now that I've simplified the code, and checked that it still works, I can turn it into a function:
+Sacando cálculos intermedios en variables nombradas es una buena práctica porque deja más claro lo que está haciendo el código. Ahora que has simplificado el código, y chequeado de que aún funciona, puedo convertirlo en una función:
 
 ```{r}
 rescale01 <- function(x) {
@@ -76,30 +75,27 @@ rescale01 <- function(x) {
 rescale01(c(0, 5, 10))
 ```
 
-There are three key steps to creating a new function:
+Hay 3 pasos clasves para crear una funció nueva:
 
-1.  You need to pick a __name__ for the function. Here I've used `rescale01` 
-    because this function rescales a vector to lie between 0 and 1.
+1. Necesitas elegir un __name__ para la función. Aquí he usado `rescale01` poque esta función reescala un vector para que se encuentre entre 0 y 1. 
 
-1.  You list the inputs, or __arguments__, to the function inside `function`.
-    Here we have just one argument. If we had more the call would look like
-    `function(x, y, z)`.
+1. Listas los inputs, o  __arguments__, a la función dentro de `function`. 
+Aquí solo tenemos un argumento. Si tenemos más, la llamada se vería como `function(x, y, z)`.
+1. Situas el código que has creado en __body__ de una función, un 
+`{` block that immediately follows `function(...)`.
 
-1.  You place the code you have developed in __body__ of the function, a 
-    `{` block that immediately follows `function(...)`.
+Ten en cuenta el proceso general: yo solo creo la función después de darme cuenta como funciona con una entrada simple. Es más fácil de empezar con codigo funcionando y convertirlo en una función; es más dificil de crear una función y luego intentar de hacerlo trabajar. 
 
-Note the overall process: I only made the function after I'd figured out how to make it work with a simple input. It's easier to start with working code and turn it into a function; it's harder to create a function and then try to make it work.
-
-At this point it's a good idea to check your function with a few different inputs:
+En este punto es una buena idea controlar tu función con algunos inputs diferentes:
 
 ```{r}
 rescale01(c(-10, 0, 10))
 rescale01(c(1, 2, 3, NA, 5))
 ```
 
-As you write more and more functions you'll eventually want to convert these informal, interactive tests into formal, automated tests. That process is called unit testing. Unfortunately, it's beyond the scope of this book, but you can learn about it in <http://r-pkgs.had.co.nz/tests.html>.
+A medida que escribas más y más funciones eventualmente querras convertir estos informales, tests interactivos en tests formales y automatizados. Este proceso se llama examen de la unidad. Desafortunadamente, esto está más allá del alcance de este libro, pero puede aprender sobre eso en <http://r-pkgs.had.co.nz/tests.html>.
 
-We can simplify the original example now that we have a function:
+Podemos simplificar el ejemplo original ahora que tenemos una función:
 
 ```{r}
 df$a <- rescale01(df$a)
@@ -108,16 +104,18 @@ df$c <- rescale01(df$c)
 df$d <- rescale01(df$d)
 ```
 
-Compared to the original, this code is easier to understand and we've eliminated one class of copy-and-paste errors. There is still quite a bit of duplication since we're doing the same thing to multiple columns. We'll learn how to eliminate that duplication in [iteration], once you've learned more about R's data structures in [vectors].
+Comparado al original, este código es fácil de entender y hemos eliminado erorres del tipo copiar-y-pegar-. Esto es aún un poco de duplicación ya que estamos relizando lo mismo a diferentes columnas. Aprenderemos como eliminar esta duplicación en [iteración], una vez que hayas aprendido más sobre las estructuras de R en [vectores].
 
-Another advantage of functions is that if our requirements change, we only need to make the change in one place. For example, we might discover that some of our variables include infinite values, and `rescale01()` fails:
+
+Otra ventaja de las funcioens es que nuestros requerimientos camiban, solo necesitamos hacer cambios en un solo lugar. Por ejemplo, podríamos descubrir que algunas de nuestras variables incluyen valores infinitos y `rescale01()` falla:
+
 
 ```{r}
 x <- c(1:10, Inf)
 rescale01(x)
 ```
 
-Because we've extracted the code into a function, we only need to make the fix in one place:
+Porque hemos extraído el código en una función, nosotros solo necesitamos corregirlo en un solo lugar:
 
 ```{r}
 rescale01 <- function(x) {
@@ -129,18 +127,13 @@ rescale01(x)
 
 This is an important part of the "do not repeat yourself" (or DRY) principle. The more repetition you have in your code, the more places you need to remember to update when things change (and they always do!), and the more likely you are to create bugs over time.
 
-### Practice
+### Práctica
 
-1.  Why is `TRUE` not a parameter to `rescale01()`? What would happen if
-    `x` contained a single missing value, and `na.rm` was `FALSE`?
+1. ¿Por qué `TRUE` no es un parámetro para `rescale01()`? ¿Qué pasaría si `x` está contenido en un valor único perdido y `na.rm` fuese `FALSE`?
 
-1.  In the second variant of `rescale01()`, infinite values are left
-    unchanged. Rewrite `rescale01()` so that `-Inf` is mapped to 0, and 
-    `Inf` is mapped to 1.
-
-1.  Practice turning the following code snippets into functions. Think about 
-    what each function does. What would you call it? How many arguments does it
-    need? Can you rewrite it to be more expressive or less duplicative?
+1. En la segunda variante de `rescale01()`, los valores infinitos se dejan sin cambio. Reescribe `rescale01()` así `-Inf` is convertido a 0, y `Inf` es convertido a 1.
+    
+1. Practica convertir los siguientes fragmentos de código en funciones. Piensa en lo que hace cada función. ¿Cómo lo llamarías? ¿Cuántos argumentos necesita? ¿Puedes reescribirlo para ser más expresivo o menos duplicado?
 
     ```{r, eval = FALSE}
     mean(is.na(x))
@@ -150,29 +143,26 @@ This is an important part of the "do not repeat yourself" (or DRY) principle. Th
     sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
     ```
 
-1.  Follow <http://nicercode.github.io/intro/writing-functions.html> to 
-    write your own functions to compute the variance and skew of a numeric 
-    vector.
+1.  Sigue <http://nicercode.github.io/intro/writing-functions.html> 
+para escribir tus propias funciones para computar la variancia y el sesgo de un vector numérico. 
 
-1.  Write `both_na()`, a function that takes two vectors of the same length 
-    and returns the number of positions that have an `NA` in both vectors.
+1.  Escribe `both_na()`, una función que toma dos vectores de la misma longitud y retorna el número de posiciones que tiene `NA` en ambos vectores. 
 
-1.  What do the following functions do? Why are they useful even though they
-    are so short?
+1. ¿Qué hacen las siguientes funciones? ¿Por qué son tan útiles aún cuando son tan cortas?
     
     ```{r}
     is_directory <- function(x) file.info(x)$isdir
     is_readable <- function(x) file.access(x, 4) == 0
     ```
 
-1.  Read the [complete lyrics](https://en.wikipedia.org/wiki/Little_Bunny_Foo_Foo) 
-    to "Little Bunny Foo Foo". There's a lot of duplication in this song. 
-    Extend the initial piping example to recreate the complete song, and use 
-    functions to reduce the duplication.
+1.  Lee el [complete lyrics](https://en.wikipedia.org/wiki/Little_Bunny_Foo_Foo) 
+    de "Pequeño conejito Foo Foo". There's a lot of duplication in this song. 
+    Extiende el ejemplo inicial de pipes para recrear la canción completa, usar las funciones para reducir la duplicación. 
 
-## Functions are for humans and computers
 
-It's important to remember that functions are not just for the computer, but are also for humans. R doesn't care what your function is called, or what comments it contains, but these are important for human readers. This section discusses some things that you should bear in mind when writing functions that humans can understand.
+## Las funciones son para los humanos y las computadoras
+
+It's important to remember that functions are not just for the computer, but ar also for humans. R doesn't care what your function is called, or what comments it contains, but these are important for human readers. This section discusses some things that you should bear in mind when writing functions that humans can understand.
 
 The name of a function is important. Ideally, the name of your function will be short, but clearly evoke what the function does. That's hard! But it's better to be clear than short, as RStudio's autocomplete makes it easy to type long names.
 
