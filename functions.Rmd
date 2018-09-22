@@ -747,9 +747,9 @@ mtcars %>%
   show_missings() 
 ```
 
-## Environment
+## Entorno
 
-The last component of a function is its environment. This is not something you need to understand deeply when you first start writing functions. However, it's important to know a little bit about environments because they are crucial to how functions work. The environment of a function controls how R finds the value associated with a name. For example, take this function:
+El último componente de una función es su entorno. Esto no es algo que debes entender profundamente cuando tu empieas a escribir funciones. Sin embargo, es importante saber un poco acerca de entornos porque es crucial para que algunas funciones trabajen. El entorno de una función controal como R encuentra el valor asociado con un nombre. Por ejemplo, la siguiente función:
 
 ```{r}
 f <- function(x) {
@@ -757,7 +757,7 @@ f <- function(x) {
 } 
 ```
 
-In many programming languages, this would be an error, because `y` is not defined inside the function. In R, this is valid code because R uses rules called __lexical scoping__ to find the value associated with a name. Since `y` is not defined inside the function, R will look in the __environment__ where the function was defined:
+En muchos lenguajes de programación, esto sería un error, porque `y` no está definido dentro de la función. En R, esto es un código válido ya que R usa reglas llamadas __lexical scoping__ para encontrar el valor asociado a un nombre. Como `y` no está definido dentro de la función, R mirará dentro del __environment__ donde la función fue definida:
 
 ```{r}
 y <- 100
@@ -767,9 +767,7 @@ y <- 1000
 f(10)
 ```
 
-This behaviour seems like a recipe for bugs, and indeed you should avoid creating functions like this deliberately, but by and large it doesn't cause too many problems (especially if you regularly restart R to get to a clean slate). 
-
-The advantage of this behaviour is that from a language standpoint it allows R to be very consistent. Every name is looked up using the same set of rules. For `f()` that includes the behaviour of two things that you might not expect: `{` and `+`. This allows you to do devious things like:
+Este comportamiento parece una receta para errores, y de hecho debes evitar crear funciones como esta deliberadamente, pero en general no causa demasiados problemas (especialmente si reinicias regularmente R para llegar a un borrón y cuenta nueva). La ventaja de este comportamiento es que, desde el punto de vista del lenguaje, permite que R sea muy consistente. Cada nombre es buscado usando el mismo conjunto de reglas. Para `f()`incluye el comportamiento de dos cosas que podrías no esperar: `{` y `+`. Esto permite hacer cosas tortuosas como la siguiente:
 
 ```{r}
 `+` <- function(x, y) {
@@ -783,4 +781,6 @@ table(replicate(1000, 1 + 2))
 rm(`+`)
 ```
 
-This is a common phenomenon in R. R places few limits on your power. You can do many things that you can't do in other programming languages. You can do many things that 99% of the time are extremely ill-advised (like overriding how addition works!). But this power and flexibility is what makes tools like ggplot2 and dplyr possible. Learning how to make best use of this flexibility is beyond the scope of this book, but you can read about in [_Advanced R_](http://adv-r.had.co.nz).
+Hay un fenómeno común en R. R pone algunos límites a tu poder. 
+Puedes hacer cosas que no podrías en otro lenguaje de programación. 
+Puedes hacer cosas que el 99% de las veces son extremadamente desacertadas (¡como ignorar como funciona la adición!). Pero esta flexibilidad es lo que hace que herramientas como ggplot2 y dplyr sea posible. Aprender de como hacer el mejor uso de esta flexibilidad está mas allá del alcance de este libro, pero puedes leer al respecto en [_Advanced R_](http://adv-r.had.co.nz).
