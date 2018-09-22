@@ -125,7 +125,7 @@ rescale01 <- function(x) {
 rescale01(x)
 ```
 
-This is an important part of the "do not repeat yourself" (or DRY) principle. The more repetition you have in your code, the more places you need to remember to update when things change (and they always do!), and the more likely you are to create bugs over time.
+Esta es una importante parte de "no repetirse a uno mismo" (o DRY) principio. Cuanto más repetición tengas en tu código, la mayor parte de lugares que neceistas recordar de actualizar cuando las cosas cambian (¡y esto siempre sucede!), y es más probable que crees errores (bugs) a lo largo del tiempo. 
 
 ### Práctica
 
