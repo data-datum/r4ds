@@ -10,6 +10,7 @@ Un pipe, `%>%`, viene del paquete __magrittr__  de Stefan Milton Bache. Los paqu
 
 ```{r setup, message = FALSE}
 library(magrittr)
+library(datos)
 ```
 
 ## Alternativas a los pipes 
@@ -59,8 +60,6 @@ Cada vez que escribo código como este, invariablemente uso el número incorrect
 Probablemente te preocupes que esta forma cree muchas copias de tus datos y ocupe demasiada memoria. Sorprendentemente, este no es el caso. Primero, ten en cuenta que preocuparse proactivamente acerca de la memoria no es una manera útil de invertir tu tiempo: preocupate acerca de ello cuando se convierta en un problema (ej. cuando te quedes sin memoria), no antes. En segundo lugar, R no es estúpido, compartirá las columnas a lo largo de los marcos de datos, cuando sea posible. Veamos a una tubería de manipulación de datos cuando agregamos un nueva columna al `ggplot2::diamantes`:
 
 ```{r}
-diamantes <- datos::diamantes
-
 diamantes2 <- diamantes %>%
   dplyr::mutate(precio_por_quilate = precio / quilate)
 
@@ -217,8 +216,6 @@ rnorm(100) %>%
 *   Si estas trabajando con funciones que no están basados en una API (ej., tu pasas vectores individuales, no un dataframe o expresiones a ser evaluadas en el contexto de un dataframe), pueden encontrar `%$%` útil. El operador explota las variables en un dataframe así que te puedes referir a ellos explícitamente. Esto es útil cuando se trabaja con muchas funciones en R base:
 
 ```{r}
-mtautos <- datos::mtautos
-
 mtautos %$%
   cor(cilindrada, millas)
 ```
