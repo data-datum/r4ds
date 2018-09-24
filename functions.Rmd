@@ -301,7 +301,7 @@ Tenga cuidado al probar la igualdad.`==` está vectorizado, lo que significa que
 identical(0L, 0)
 ```
 
-You also need to be wary of floating point numbers:
+También hay que tener cuidado con los números de coma flotante:
 
 ```{r}
 x <- sqrt(2) ^ 2
