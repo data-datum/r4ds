@@ -328,7 +328,7 @@ if (this) {
 }
 ```
 
-Pero si terminas con una larga serie de sentencias`if` encadenadas, deberías considerar reescribir. Una técnica útil es la función `switch()` . Esta le permite evaluar el código seleccionado según la posición o el nombre.
+Pero si terminas con una larga serie de sentencias `if` encadenadas, deberías considerar reescribir. Una técnica útil es la función `switch()` . Esta le permite evaluar el código seleccionado según la posición o el nombre.
 
 ```{r, echo = FALSE}
 function(x, y, op) {
@@ -374,7 +374,7 @@ else {
 }
 ```
 
-Estaría bien evitar las llaves si tienes una sentencia `if` muy corta que pueda caber en una línea:
+Estaría bien evitar las llaves si tienes una sentencia `if` muy corta que pueda entrar en una línea:
 
 ```{r}
 y <- 10
@@ -396,9 +396,9 @@ if (y < 20) {
 1. ¿Cuál es la diferencia entre `if` and `ifelse()`? Lea cuidadosamente la ayuda y construya tres      ejemplos que ilustren las diferencias claves.
     
 
-1.  Escriba una función de saludo que diga "buenos días", "buenas tardes" o "buenas noches", según      la hora del día. (Sugerencia: use un argumento de tiempo que por defecto es `lubridate::now()`,     eso hará que sea más fácil probar su función).
+1.  Escriba una función de saludo que diga "buenos días", "buenas tardes" o "buenas noches", según      la hora del día. (Sugerencia: use un argumento de tiempo que por defecto es `lubridate::now()`, eso hará que sea más fácil probar su función).
 
-1.  Implemente una función `fizzbuzz`. Toma un solo número como entrada. Si el número es divisible      por tres, devuelve "fizz". Si es divisible por cinco, devuelve "buzz". Si es divisible por tres     y cinco, devuelve "fizzbuzz". De lo contrario, devuelve el número. Asegúrese de escribir primero     el código de trabajo antes de crear la función.
+1.  Implemente una función `fizzbuzz`. Toma un solo número como entrada. Si el número es divisible  por tres, devuelve "fizz". Si es divisible por cinco, devuelve "buzz". Si es divisible por tres y cinco, devuelve "fizzbuzz". De lo contrario, devuelve el número. Asegúrese de escribir primero  el código de trabajo antes de crear la función.
     
 1.  ¿Cómo podría usar `cut()` para simplificar una sentencia if-else anidada?
 
@@ -416,7 +416,7 @@ if (y < 20) {
     }
     ```
   
-    ¿Cómo cambiarías la sentencia a `cut()` si hubieras usado `<`en lugar de `<=`? ¿Cuál es la otra     ventaja principal de `cut()` para este problema? (Sugerencia: ¿qué sucede si tienes muchos          valores en  `temp`?)
+    ¿Cómo cambiarías la sentencia a `cut()` si hubieras usado `<`en lugar de `<=`? ¿Cuál es la otra ventaja principal de `cut()` para este problema? (Sugerencia: ¿qué sucede si tienes muchos valores en  `temp`?)
 
 1.  ¿Qué sucedería si usaras `switch()` con un valor numérico?
 
