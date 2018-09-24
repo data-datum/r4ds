@@ -59,16 +59,17 @@ Cada vez que escribo código como este, invariablemente uso el número incorrect
 Probablemente te preocupes que esta forma cree muchas copias de tus datos y ocupe demasiada memoria. Sorprendentemente, este no es el caso. Primero, ten en cuenta que preocuparse proactivamente acerca de la memoria no es una manera útil de invertir tu tiempo: preocupate acerca de ello cuando se convierta en un problema (ej. cuando te quedes sin memoria), no antes. En segundo lugar, R no es estúpido, compartirá las columnas a lo largo de los marcos de datos, cuando sea posible. Veamos a una tubería de manipulación de datos cuando agregamos un nueva columna al `ggplot2::diamantes`:
 
 ```{r}
-data(diamantes)
+diamantes <- datos::diamantes
+
 diamantes2 <- diamantes %>%
   dplyr::mutate(precio_por_quilate = precio / quilate)
 
-pryr::tamaño_objeto(diamantes)
-pryr::tamaño_objeto(diamantes2)
-pryr::tamaño_objeto(diamantes, diamantes2)
+pryr::object_size(diamantes)
+pryr::object_size(diamantes2)
+pryr::object_size(diamantes, diamantes2)
 ```
 
-`pryr::tamaño_objeto()` ofrece la cantidad de memoria ocupada por todos los argumentos. Este resultado puede parecer contraintuitivo al principio:
+`pryr::object_size()` ofrece la cantidad de memoria ocupada por todos los argumentos. Este resultado puede parecer contraintuitivo al principio:
 
 * `diamantes` ocupa 3.46 MB,
 * `diamantes2` ocupa 3.89 MB,
@@ -78,12 +79,12 @@ pryr::tamaño_objeto(diamantes, diamantes2)
 
 ```{r}
 diamantes$quilates[1] <- NA
-pryr::tamaño_objeto(diamantes)
-pryr::tamaño_objeto(diamantes2)
-pryr::tamaño_objeto(diamantes, diamantes2)
+pryr::object_size(diamantes)
+pryr::object_size(diamantes2)
+pryr::object_size(diamantes, diamantes2)
 ```
 
-(Notar que usamos `pryr::tamaño_objeto()` aquí, no en la construcción `tamaño.objeto()`. `tamaño.objeto()` solo toma un solo objeto así que puede computar como los datos son compartidos a través de múltiples objetos.)
+(Notar que usamos `pryr::object_size()` aquí, no en la construcción `object.size()`. `object.size()` solo toma un solo objeto así que puede computar como los datos son compartidos a través de múltiples objetos.)
 
 ### Sobreescribir el original
 
@@ -142,7 +143,6 @@ Esta es mi forma preferida, ya que se enfoca en los verbos, no en los sustantivo
  
 El pipe trabaja realizando una "transformación léxica": detrás de escena, magrittr reensambla el código en el pipe a una forma que funciona por sobreescritura en un objeto intermedio. Cuando se ejecuta un pipe como el de arriba, magrittr hace algo como esto:
 
-
 ```{r, eval = FALSE}
 mi_pipe <- function(.) {
   . <- saltar(., a_traves_del = bosque)
@@ -155,45 +155,43 @@ mi_pipe(foo_foo)
 Esto significa que un pipe no trabajara para dos clases de funciones:
 1. Funciones que usan el entorno actual. Por ejemplo, `asignar()`creará una nueva variable con el nombre dado en el entorno actual:
      
-    ```{r}
+```{r}
 assign("x", 10)
 x
 
 "x" %>% assign(100)
 x
-    ```
+```
     
+El uso de la asignación con el pipe no funciona porque lo asigna a un entorno temporario usado por `%>%`. Si quieres usar la asignación con pipe, debes explicitar el entorno:
     
-    El uso de la asignación con el pipe no funciona porque lo asigna a un entorno temporario usado por `%>%`. Si quieres usar la asignación con pipe, debes explicitar el entorno:
-    
-    ```{r}
+```{r}
 env <- environment()
 "x" %>% assign(100, envir = env)
 x
-    ```
+```
     
-    Otras funciones con este problema incluyen  `get()` y `load()`.
+Otras funciones con este problema incluyen  `get()` y `load()`.
+
 1. Funciones que usan una evaluación perezosa. En R, los argumentos de las funciones son solamente computados cuando la función los usa, no antes de llamar a la función. El pipe computa cada elemento de a turno, así que no puedes confiar en este comportamiento. 
 
-    Un lugar para este problema es `tryCatch()`, que te permite capturar y manejar errores:
+Un lugar para este problema es `tryCatch()`, que te permite capturar y manejar errores:
     
-    ```{r, error = TRUE}
+```{r, error = TRUE}
 tryCatch(stop("!"), error = function(e) "An error")
 
 stop("!") %>%
   tryCatch(error = function(e) "An error")
-    ```
+```
     
-    Hay una relativa gran cantidad de funciones con este comportamiento, incluyendo a `try()`, `suppressMessages()`, y `suppressWarnings()` en R base. 
-    
-  
+Hay una relativa gran cantidad de funciones con este comportamiento, incluyendo a `try()`, `suppressMessages()`, y `suppressWarnings()` en R base. 
+
 ## Cuando no usar el pipe
 
 El pipe es una herramienta poderosa, pero no es la única herramienta a tu disposición, ¡y no soluciona ningún problema! Los pipes son mayoritariamente usados para reescribir una secuencia lineal bastante corta de operaciones. Pienso que deberías buscar otra herramienta cuando:
 
 * Tus pipes no son más largas que (digamos) 10 pasos. En ese caso, creamos objetos intermedios con nombres significativos. Esto hará el debugging más fácil, porque puede más facilmente chequear los resultados intermedios, y hace más simple entender tu código, porque los nombres de las variables pueden ayudar a comunicar la intención. 
 * Tienes múltiples inputs y outputs. Si no hay un objeto primario para ser transformado, pero sí dos o más objetos siendo combinados juntos, no uses el pipe. 
-  
 * Si estas empezando a pensar acerca de un gráfico directo con una estructura compleja de dependencia. Los pipes son fundamentalmente lineales y expresan relaciones complejas que típicamente llevarán a un código confuso. 
 
 ## Otras herramientas de magrittr
@@ -204,7 +202,7 @@ Todos los paquetes en tidyverse automaticamente harán  `%>%` disponible para t�
 
 Para trabajar en torno a este problema, puedes usar el pipe "T". `%T>%`trabaja igual que `%>%` excepto que este devuelve el lado izquierdo en vez del lado derecho. Se lo llama "T" porque literalmente tiene la forma de una T.
   
-    ```{r}
+```{r}
 rnorm(100) %>%
   matrix(ncol = 2) %>%
   plot() %>%
@@ -214,29 +212,29 @@ rnorm(100) %>%
   matrix(ncol = 2) %T>%
   plot() %>%
   str()
-    ```
+```
 
 *   Si estas trabajando con funciones que no están basados en una API (ej., tu pasas vectores individuales, no un dataframe o expresiones a ser evaluadas en el contexto de un dataframe), pueden encontrar `%$%` útil. El operador explota las variables en un dataframe así que te puedes referir a ellos explícitamente. Esto es útil cuando se trabaja con muchas funciones en R base:
 
-    
-    ```{r}
-    data(mtautos)
-    mtautos %$%
-      cor(disp, mpg)
-    ```
+```{r}
+mtautos <- datos::mtautos
+
+mtautos %$%
+  cor(cilindrada, millas)
+```
 
 *   Para asignaciones magrittr provee el operador `%<>%` te permite reemplazar el código como: 
   
-    ```{r, eval = FALSE}
+```{r, eval = FALSE}
 mtautos <- mtautos %>%
   transform(cilindros = cilindros * 2)
-    ```
+```
     
-    con
+con
      
-    ```{r, eval = FALSE}
+```{r, eval = FALSE}
 mtautos %<>% transform(cilindros = cilindros * 2)
-    ```
+```
 
-    No soy partidario de este operador porque pienso que una asignación es una operación especial que siempre debe ser clara cuando sucede. 
-    En mi opinión, un poco de duplicación (ej repetir el nombre de un objeto dos veces) está bien para lograr hacerlo más explícito. 
+No soy partidario de este operador porque pienso que una asignación es una operación especial que siempre debe ser clara cuando sucede.
+En mi opinión, un poco de duplicación (ej repetir el nombre de un objeto dos veces) está bien para lograr hacerlo más explícito. 
