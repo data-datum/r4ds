@@ -302,7 +302,7 @@ Tenga cuidado al probar la igualdad.`==` está vectorizado, lo que significa que
 identical(0L, 0)
 ```
 
-También hay que tener cuidado con los números de coma flotante:
+También hay que tener cuidado con los números de punto flotante:
 
 ```{r}
 x <- sqrt(2) ^ 2
@@ -480,9 +480,7 @@ mean(, TRUE, x = c(1:10, NA))
 
 Puedes referirte al argumento por su único prefijo (ej. `mean(x, n = TRUE)`), pero generalmente es mejor evitar determinadas posibilidades de  confusión. 
 
-Ten en cuena que cuando invocas a una función, debes colocar un espacio alrededor de `=` en la invocación a la función, y siempre poner un espacio después de la coma, no antes (como regularmente en inglés). El uso del espacio en blanco hace más fácil 
-
- Using whitespace makes it easier to skim the function for the important components.
+Ten en cuena que cuando invocas a una función, debes colocar un espacio alrededor de `=` en la invocación a la función, y siempre poner un espacio después de la coma, no antes (como regularmente en inglés). El uso del espacio en blanco hace más fácil ojear la función para los componentes importantes. 
 
 ```{r, eval = FALSE}
 # Good
@@ -529,7 +527,6 @@ wt_mean(1:6, 1:3)
 ```
 
 En este caso, debido a las reglas de los vectores de R, no obtenemos un error.
-In this case, because of R's vector recycling rules, we don't get an error. 
 
 Es una buena práctica  verificar las precondiciones, y arrojar un error (con `stop()`), si esto no es verdadero:
 
@@ -628,7 +625,7 @@ Los argumentos en R se evalúan con holgazanería: no se computan hasta que se n
 
 ### Ejercicios
 
-1.  ¿Qué realizan las `commas(letters, collapse = "-")` do? ¿Por qué?
+1.  ¿Qué realizan las `commas(letters, collapse = "-")`? ¿Por qué?
 
 1.  Sería bueno si se pudiera suplantar múltiples caracteres al argumento `pad`, 
     ej., `rule("Title", pad = "-+")`. ¿Por qué esto actualmente no funciona? ¿Cómo podrías solucionarlo?
@@ -644,7 +641,7 @@ Darse cuenta qué es lo que tu función debería devolver suele ser bastante dir
 
 1. ¿Devolver un valor antes, hace que tu función sea más fácil de leer?  
 
-2. 2.	¿Puedes hacer tu función pipeable?
+1. ¿Puedes hacer tu función apta para un pipe?
 
 ### Sentencias explícitas de salida
 
@@ -656,7 +653,7 @@ complicated_function <- function(x, y, z) {
     return(0)
   }
     
-  # Complicated code here
+  # Código complicado aquí
 }
 
 ```
@@ -689,14 +686,14 @@ f <- function() {
     return(something_short)
   }
 
-  # Do 
-  # something
-  # that
-  # takes
-  # many
-  # lines
-  # to
-  # express
+  # Haz
+  # algo
+  # que 
+  # tome 
+  # muchas 
+  # lineas 
+  # para
+  # expresar
 }
 ```
 
@@ -706,7 +703,7 @@ Esto permite hacer el código más fácil de entender, ya que no necesitas tanto
 
 Si quieres escribir tus propias funciones pipeables, es importante que pienses sobre los valores de salida. Conocer el tipo de objeto de tu valor de salida significará que tu línea pipeable funciona.  Por ejemplo, en dplyr y tidyr el tipo de objeto es un data frame.
 
-Hay dos tipos básicos de funciones pipeables: transformaciones y de efectos secundarios.  En las __transformations__, se ingresa un objeto como primer argumento y luego se devuelve una versión modificada del mismo. En el caso de __side-effects__, el objeto ingresado no es modificado sino que la función actúa sobre el objeto. Un ejemplo sería dibujar un gráfico o guardar un archivo.  Las funciones de efectos secundarios deben “invisibilizar” el primer argumento, de forma que mientras no sean impresos puedan seguir siendo usados en una línea pipeable. Por ejemplo, esta función imprime el número de valores faltantes en un data frame: 
+Hay dos tipos básicos de funciones pipeables: transformaciones y de efectos secundarios.  En las __transformaciones__, se ingresa un objeto como primer argumento y luego se devuelve una versión modificada del mismo. En el caso de __efectos_secundarios__, el objeto ingresado no es modificado sino que la función actúa sobre el objeto. Un ejemplo sería dibujar un gráfico o guardar un archivo.  Las funciones de efectos secundarios deben “invisibilizar” el primer argumento, de forma que mientras no sean impresos puedan seguir siendo usados en una línea pipeable. Por ejemplo, esta función imprime el número de valores faltantes en un data frame: 
 
 ```{r}
 show_missings <- function(df) {
@@ -753,7 +750,7 @@ f <- function(x) {
 } 
 ```
 
-En muchos lenguajes de programación, esto sería un error, porque `y` no está definido dentro de la función. En R, esto es un código válido ya que R usa reglas llamadas __lexical scoping__ para encontrar el valor asociado a un nombre. Como `y` no está definido dentro de la función, R mirará dentro del __environment__ donde la función fue definida:
+En muchos lenguajes de programación, esto sería un error, porque `y` no está definido dentro de la función. En R, esto es un código válido ya que R usa reglas llamadas __lexical scoping__ para encontrar el valor asociado a un nombre. Como `y` no está definido dentro de la función, R mirará dentro del __entorno__ donde la función fue definida:
 
 ```{r}
 y <- 100
