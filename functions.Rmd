@@ -219,9 +219,9 @@ Otro uso importante de los comentarios es para dividir tu archivo en partes de m
 
 
 ```{r, eval = FALSE}
-# Load data --------------------------------------
+# Cargar los datos  --------------------------------------
 
-# Plot data --------------------------------------
+# Graficar los datos  --------------------------------------
 ```
 
 RStudio proporciona un abreviado de teclado para crear estos encabezados  (Cmd/Ctrl + Shift + R), y te los muestra en el menú desplegable de navegación de código en la parte inferior izquierda del editor:
