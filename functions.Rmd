@@ -436,20 +436,21 @@ if (y < 20) {
 
 ## Function arguments
 
-The arguments to a function typically fall into two broad sets: one set supplies the __data__ to compute on, and the other supplies arguments that control the __details__ of the computation. For example:
+Los argumentos de las funciones normalmente están dentro de dos grupos: por un lado, se proveen los __datos__ a calcular, y por el otro los argumentos que controlan los __detalles__ del cálculo. Por ejemplo:
 
-* In `log()`, the data is `x`, and the detail is the `base` of the logarithm.
 
-* In `mean()`, the data is `x`, and the details are how much data to trim
+* En `log()`, the data is `x`, and the detail is the `base` of the logarithm.
+
+* En `mean()`, the data is `x`, and the details are how much data to trim
   from the ends (`trim`) and how to handle missing values (`na.rm`).
 
-* In `t.test()`, the data are `x` and `y`, and the details of the test are
+* En `t.test()`, the data are `x` and `y`, and the details of the test are
   `alternative`, `mu`, `paired`, `var.equal`, and `conf.level`.
   
-* In `str_c()` you can supply any number of strings to `...`, and the details
+* En `str_c()` you can supply any number of strings to `...`, and the details
   of the concatenation are controlled by `sep` and `collapse`.
   
-Generally, data arguments should come first. Detail arguments should go on the end, and usually should have default values. You specify a default value in the same way you call a function with a named argument:
+Generalmente, los datos de los argumentos deben estar primeros. El detalle de los mismos podría estar al final y con valores predeterminados. Se especifica un valor predeterminado de la misma manera en la que es nombrada una función con su argumento:
 
 ```{r}
 # Compute confidence interval around mean using normal approximation
@@ -464,9 +465,9 @@ mean_ci(x)
 mean_ci(x, conf = 0.99)
 ```
 
-The default value should almost always be the most common value. The few exceptions to this rule are to do with safety. For example, it makes sense for `na.rm` to default to `FALSE` because missing values are important. Even though `na.rm = TRUE` is what you usually put in your code, it's a bad idea to silently ignore missing values by default.
+El valor predeterminado debería ser casi siempre el valor más común. Pocas excepciones a esta regla podrían ser seguras. Por ejemplo, tiene sentido que `na.rm` por defecto sea `FALSE` porque los valores faltantes son importantes. Aunque `na.rm = TRUE` que es lo que usualmente pones en tu codigo, es una mala idea ignorar silenciosamente por defecto.
 
-When you call a function, you typically omit the names of the data arguments, because they are used so commonly. If you override the default value of a detail argument, you should use the full name:
+Cuando nombras a una función, generalmente omites los nombres de los argumentos de datos justamente porque son los más comúnmente usados. Si anulas los valores predeterminados del detalle de los argumentos, se debería usar el nombre completo:
 
 ```{r, eval = FALSE}
 # Good
@@ -477,9 +478,11 @@ mean(x = 1:10, , FALSE)
 mean(, TRUE, x = c(1:10, NA))
 ```
 
-You can refer to an argument by its unique prefix (e.g. `mean(x, n = TRUE)`), but this is generally best avoided given the possibilities for confusion.
+Puedes referirte al argumento por su único prefijo (ej. `mean(x, n = TRUE)`), pero generalmente es mejor evitar determinadas posibilidades de  confusión. 
 
-Notice that when you call a function, you should place a space around `=` in function calls, and always put a space after a comma, not before (just like in regular English). Using whitespace makes it easier to skim the function for the important components.
+Ten en cuena que cuando invocas a una función, debes colocar un espacio alrededor de `=` en la invocación a la función, y siempre poner un espacio después de la coma, no antes (como regularmente en inglés). El uso del espacio en blanco hace más fácil 
+
+ Using whitespace makes it easier to skim the function for the important components.
 
 ```{r, eval = FALSE}
 # Good
@@ -489,22 +492,22 @@ average <- mean(feet / 12 + inches, na.rm = TRUE)
 average<-mean(feet/12+inches,na.rm=TRUE)
 ```
 
-### Choosing names
+### Elección de nombres 
 
-The names of the arguments are also important. R doesn't care, but the readers of your code (including future-you!) will. Generally you should prefer longer, more descriptive names, but there are a handful of very common, very short names. It's worth memorising these:
+Los nombres de los argumentos son también importantes. Para R no es sumamente importante pero si para los usuarios (¡incluyéndote en un futuro!). En general, se podrían preferir nombres más largos y más descriptivos, pero hay un puñado de nombres muy comunes y muy cortos. Vale la pena memorizar estos:
 
-* `x`, `y`, `z`: vectors.
-* `w`: a vector of weights.
+* `x`, `y`, `z`: vectores.
+* `w`: un vector de pesos.
 * `df`: a data frame.
-* `i`, `j`: numeric indices (typically rows and columns).
-* `n`: length, or number of rows.
-* `p`: number of columns.
+* `i`, `j`: índices numéricos (usualmente filas y columnas).
+* `n`: longitud, or número de filas.
+* `p`: número de columnas.
 
-Otherwise, consider matching names of arguments in existing R functions. For example, use `na.rm` to determine if missing values should be removed.
+Aunque, se debería considerar la coincidencia de nombres de argumentos en funciones de R. Por ejemplo, usa `na.rm` para determinar si los valores faltantes podrían ser eliminados.
 
-### Checking values
+### Controlando valores 
 
-As you start to write more functions, you'll eventually get to the point where you don't remember exactly how your function works. At this point it's easy to call your function with invalid inputs. To avoid this problem, it's often useful to make constraints explicit. For example, imagine you've written some functions for computing weighted summary statistics:
+A medida que comienzas a utilizar más funciones, eventualmente llegarás al punto en el que no la recordarás. En este punto es común que suceda la invalidación de la entrada de la función. Para evitar este problema, a menudo es útil hacer las restricciones explícitas. Por ejemplo, imagina que has escrito algunas funciones para calcular las estadísticas de resumen ponderadas: 
 
 ```{r}
 wt_mean <- function(x, w) {
@@ -519,15 +522,16 @@ wt_sd <- function(x, w) {
 }
 ```
 
-What happens if `x` and `w` are not the same length?
+¿Qué pasa si `x` y `w` no son de la misma longitud?
 
 ```{r}
 wt_mean(1:6, 1:3)
 ```
 
+En este caso, debido a las reglas de los vectores de R, no obtenemos un error.
 In this case, because of R's vector recycling rules, we don't get an error. 
 
-It's good practice to check important preconditions, and throw an error (with `stop()`), if they are not true:
+Es una buena práctica  verificar las precondiciones, y arrojar un error (con `stop()`), si esto no es verdadero:
 
 ```{r}
 wt_mean <- function(x, w) {
@@ -538,7 +542,7 @@ wt_mean <- function(x, w) {
 }
 ```
 
-Be careful not to take this too far. There's a tradeoff between how much time you spend making your function robust, versus how long you spend writing it. For example, if you also added a `na.rm` argument, I probably wouldn't check it carefully:
+Ten cuidado de no llevar esto demasiado lejos. Hay una compensación entre la cantidad de tiempo que inviertes en hacer que tu función sea sólida, en comparación con el tiempo que pasas escribiéndola. Por ejemplo, si además agregas a la función un argumento `na.rm`, probablemente no lo verificaste con cuidado:
 
 ```{r}
 wt_mean <- function(x, w, na.rm = FALSE) {
@@ -561,7 +565,8 @@ wt_mean <- function(x, w, na.rm = FALSE) {
 }
 ```
 
-This is a lot of extra work for little additional gain. A useful compromise is the built-in `stopifnot()`: it checks that each argument is `TRUE`, and produces a generic error message if not.
+Esto es mucho trabajo con poca ganancia adicional. Un compromiso útil es incorporar 
+`stopifnot()`: esto comprueba que cada argumento sea `TRUE`, en caso contrario genera un mensaje de error.
 
 ```{r, error = TRUE}
 wt_mean <- function(x, w, na.rm = FALSE) {
@@ -578,20 +583,20 @@ wt_mean <- function(x, w, na.rm = FALSE) {
 wt_mean(1:6, 6:1, na.rm = "foo")
 ```
 
-Note that when using `stopifnot()` you assert what should be true rather than checking for what might be wrong.
+Ten en cuenta que al usar `stopifnot()` afirmas lo que debería ser cierto en lugar de verificar lo que podría estar mal.
 
-### Dot-dot-dot (...)
+### Punto-punto-punto (...)
 
-Many functions in R take an arbitrary number of inputs:
+Muchas funciones en R tienen un número arbitrario de entrada:
 
 ```{r}
 sum(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 stringr::str_c("a", "b", "c", "d", "e", "f")
 ```
 
-How do these functions work? They rely on a special argument: `...` (pronounced dot-dot-dot). This special argument captures any number of arguments that aren't otherwise matched. 
+¿Cómo funcionan estas funciones? Ellos confían en un argumento especial: `...` (Pronunciando punto-punto-punto). Este argumento especial captura cualquier número de arguemntos que no están de otra forma contempladas.  
 
-It's useful because you can then send those `...` on to another function. This is a useful catch-all if your function primarily wraps another function. For example, I commonly create these helper functions that wrap around `str_c()`:
+Es útil porque puedes enviar estos  `...` a otra función. Esto es útil si su función envuelve principalmente otra función. Por ejemplo, creo estas funciones de ayuda alrededor de  `str_c()`:
 
 ```{r}
 commas <- function(...) stringr::str_c(..., collapse = ", ")
@@ -605,32 +610,31 @@ rule <- function(..., pad = "-") {
 rule("Important output")
 ```
 
-Here `...` lets me forward on any arguments that I don't want to deal with to `str_c()`. It's a very convenient technique. But it does come at a price: any misspelled arguments will not raise an error. This makes it easy for typos to go unnoticed:
+Acá `...` lets me forward on any arguments that I don't want to deal with to `str_c()`. It's a very convenient technique. But it does come at a price: any misspelled arguments will not raise an error. This makes it easy for typos to go unnoticed:
 
 ```{r}
 x <- c(1, 2)
 sum(x, na.mr = TRUE)
 ```
 
-If you just want to capture the values of the `...`, use `list(...)`.
+Si quieres captura los valores de  `...`, utiliza `list(...)`.
 
-### Lazy evaluation
+### Evaluación diferida
 
-Arguments in R are lazily evaluated: they're not computed until they're needed. That means if they're never used, they're never called. This is an important property of R as a programming language, but is generally not important when you're writing your own functions for data analysis. You can read more about lazy evaluation at <http://adv-r.had.co.nz/Functions.html#lazy-evaluation>.
+Los argumentos en R se evalúan con holgazanería: no se computan hasta que se necesitan. Esto significa que si nunca se lo usa, nunca es nombrado. Hay una propiedad importante de R como lenguaje de programación, pero generalmente no es fundamental cuando uno escribe sus propias funciones para el análisis de datos. Puedes leer más acerca de la evaluación diferida
+<http://adv-r.had.co.nz/Functions.html#lazy-evaluation>.
 
-### Exercises
+### Ejercicios
 
-1.  What does `commas(letters, collapse = "-")` do? Why?
+1.  ¿Qué realizan las `commas(letters, collapse = "-")` do? ¿Por qué?
 
-1.  It'd be nice if you could supply multiple characters to the `pad` argument, 
-    e.g. `rule("Title", pad = "-+")`. Why doesn't this currently work? How 
-    could you fix it?
+1.  Sería bueno si se pudiera suplantar múltiples caracteres al argumento `pad`, 
+    ej., `rule("Title", pad = "-+")`. ¿Por qué esto actualmente no funciona? ¿Cómo podrías solucionarlo?
     
-1.  What does the `trim` argument to `mean()` do? When might you use it?
+1.  ¿Qué realiza el argumento `trim` a la función `mean()`? ¿Cuándo podrías utilizarla?
 
-1.  The default value for the `method` argument to `cor()` is 
-    `c("pearson", "kendall", "spearman")`. What does that mean? What 
-    value is used by default?
+1.  El valor de defecto para el argumento `method` a `cor()` es
+    `c("pearson", "kendall", "spearman")`. ¿Qué significa esto? ¿Qué valor se utiliza por defecto?
 
 ## Valores de salida
 
