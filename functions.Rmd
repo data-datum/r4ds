@@ -6,9 +6,9 @@ Una de las mejores maneras de lograr tener mayor alcance como científica de dat
 
 1. Puedes dar a la función un nombre evocativo que hace to código más fácil de entender. 
 
-2. Como cambien los requerimientos, tu solo necesitas cambiar tu código en un solo lugar, en vez de varios lugares. 
+1. Como cambien los requerimientos, tu solo necesitas cambiar tu código en un solo lugar, en vez de varios lugares. 
 
-3. Tu eliminas las chances de hacer errores accidentales cuando copias y pegas (ej. actualizar el nombre de una variable en un lugar, pero no en otro).
+1. Tu eliminas las chances de hacer errores accidentales cuando copias y pegas (ej. actualizar el nombre de una variable en un lugar, pero no en otro).
 
 Escribir funciones en un viaje de toda la vida. Incluso después de usar R por varios años yo aún aprendo nuevas técnicas y mejores formas de abordar viejos problemas. El objetivo de este capítulo no es enseñarte cada detalle esotérico de funciones pero sí introducirte con consejos pragmáticos que puedes aplicar inmediatamente. 
 
@@ -77,12 +77,13 @@ rescale01(c(0, 5, 10))
 
 Hay 3 pasos clasves para crear una funció nueva:
 
-1. Necesitas elegir un __name__ para la función. Aquí he usado `rescale01` poque esta función reescala un vector para que se encuentre entre 0 y 1. 
+1. Necesitas elegir un __nombre__ para la función. Aquí he usado `rescale01` poque esta función reescala un vector para que se encuentre entre 0 y 1. 
 
-1. Listas los inputs, o  __arguments__, a la función dentro de `function`. 
+1. Listas los inputs, o  __argumentos__, a la función dentro de `function`. 
 Aquí solo tenemos un argumento. Si tenemos más, la llamada se vería como `function(x, y, z)`.
-1. Situas el código que has creado en __body__ de una función, un 
-`{` block that immediately follows `function(...)`.
+
+1. Situas el código que has creado en __cuerpo__ de una función, un 
+`{` bloque lo que inmediatamente sigue a `function(...)`.
 
 Ten en cuenta el proceso general: yo solo creo la función después de darme cuenta como funciona con una entrada simple. Es más fácil de empezar con codigo funcionando y convertirlo en una función; es más dificil de crear una función y luego intentar de hacerlo trabajar. 
 
@@ -231,7 +232,7 @@ knitr::include_graphics("screenshots/rstudio-nav.png")
 
 ### Ejercicios
 
-1.  Lee el código fuente para cada una de las siguientes tres funciones,     interpreta que hacen, y luego propone nombres mejores. 
+1.  Lee el código fuente para cada una de las siguientes tres funciones, interpreta que hacen, y luego propone nombres mejores. 
     
     ```{r}
     f1 <- function(string, prefix) {
@@ -439,16 +440,15 @@ if (y < 20) {
 Los argumentos de las funciones normalmente están dentro de dos grupos: por un lado, se proveen los __datos__ a calcular, y por el otro los argumentos que controlan los __detalles__ del cálculo. Por ejemplo:
 
 
-* En `log()`, the data is `x`, and the detail is the `base` of the logarithm.
+* En `log()`, los datos son `x`, y los detalles son la `base` del algoritmo.
 
-* En `mean()`, the data is `x`, and the details are how much data to trim
-  from the ends (`trim`) and how to handle missing values (`na.rm`).
+* En `mean()`, los datos son `x`, ay los detalles son la cantidad de datos para recortar de los extremos
+ (`trim`) y como lidiar con los valores en blanco o perdidos (`na.rm`).
 
-* En `t.test()`, the data are `x` and `y`, and the details of the test are
-  `alternative`, `mu`, `paired`, `var.equal`, and `conf.level`.
+* En `t.test()`, los datos son `x` y `y`, y los detalles del test son 
+  `alternative`, `mu`, `paired`, `var.equal`, y `conf.level`.
   
-* En `str_c()` you can supply any number of strings to `...`, and the details
-  of the concatenation are controlled by `sep` and `collapse`.
+* En `str_c()` puedes suministrar cualquier número de caracteres a `...`, y los detalles de la concatenación son contralos por `sep` y `collapse`.
   
 Generalmente, los datos de los argumentos deben estar primeros. El detalle de los mismos podría estar al final y con valores predeterminados. Se especifica un valor predeterminado de la misma manera en la que es nombrada una función con su argumento:
 
@@ -610,7 +610,9 @@ rule <- function(..., pad = "-") {
 rule("Important output")
 ```
 
-Acá `...` lets me forward on any arguments that I don't want to deal with to `str_c()`. It's a very convenient technique. But it does come at a price: any misspelled arguments will not raise an error. This makes it easy for typos to go unnoticed:
+Aquí `...` permite remitirse a cualquier argumento que no quiera tratar con `str_c()`. 
+
+Esto es muy conveniente. Pero esto viene con un precio: cualquier argumento mal escrito no presentará un error. Esto hace fácil para typos que no se notan:
 
 ```{r}
 x <- c(1, 2)
@@ -664,16 +666,16 @@ Otra razón puede ser porque tienes una sentencia `if`  con un bloque complicado
 ```{r, eval = FALSE}
 f <- function() {
   if (x) {
-    # Do 
-    # something
-    # that
-    # takes
-    # many
-    # lines
-    # to
-    # express
+    # Haz 
+    # algo
+    # que 
+    # tome
+    # muchas 
+    # lineas
+    # para
+    # expresar
   } else {
-    # return something short
+    # retorna algo corto
   }
 }
 ```
@@ -700,7 +702,7 @@ f <- function() {
 
 Esto permite hacer el código más fácil de entender, ya que no necesitas tanto contexto para interpretarlo. 
 
-### Writing pipeable functions
+### Escribir funciones aptas para un pipe
 
 Si quieres escribir tus propias funciones pipeables, es importante que pienses sobre los valores de salida. Conocer el tipo de objeto de tu valor de salida significará que tu línea pipeable funciona.  Por ejemplo, en dplyr y tidyr el tipo de objeto es un data frame.
 
@@ -721,7 +723,7 @@ Si la llamamos de manera interactiva, el comando `invisible()` significa que el 
 show_missings(mtcars)
 ```
 
-Pero sigue estando ahí, solamente que no se imprime por default:
+Pero sigue estando ahí, solamente que no se imprime por defecto:
 
 ```{r}
 x <- show_missings(mtcars) 
